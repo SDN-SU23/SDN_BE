@@ -1,26 +1,40 @@
-'use strict'
+'use strict';
+// single turn
+const mongoose = require('mongoose');
 
-// connect string
-const mongoose = require('mongoose')
-const connectString = `mongodb://${global.config.db.host}:${global.config.db.port}/${global.config.db.name}`
+const connectDB = `mongodb://${global.config.db.host}:${global.config.db.port}/${global.config.db.name}`;
 
-
+const { countConnect } = require('../helpers/checkConnection.helper');
 class Database {
     constructor() {
-        this.connect()
+        this.connect();
+    }
+    // connect
+    connect(type = 'mongodb') {
+        if (process.env.NODE_ENV === 'dev') {
+            mongoose.set('debug', true);
+            mongoose.set('debug', { color: true })
+        }
+
+        mongoose.connect(connectDB,
+            {
+                maxPoolSize: 50
+            }
+        )
+            .then(_ => {
+                console.log('Connect to database successfully', countConnect());
+            })
+            .catch(err => console.log(err));
     }
 
-    connect() {
-        mongoose.connect(connectString)
-            .then(() => {
-                console.log('Database connection successful')
-            })
-            .catch(err => {
-                console.error('Database connection error')
-            })
+    static getInstance() {
+        if (!Database.instance) {
+            Database.instance = new Database();
+        }
+        return Database.instance;
     }
-
 }
 
-module.exports = new Database()
+const instanceMongodb = Database.getInstance();
 
+module.exports = instanceMongodb;
