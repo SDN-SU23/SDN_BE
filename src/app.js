@@ -19,8 +19,6 @@ global.config = config;
 global.logger = logger;
 // init route
 app.use('v1/api', require('./routes/index'));
-//init route
-app.use('/v1/api', require('./routes/index'));
 // init db
 require('./dbs/init.mongoDB');
 

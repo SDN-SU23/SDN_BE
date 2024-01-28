@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const DOCUMENT_NAME = "User";
-const COLLECTION_NAME = "users";
+const COLLECTION_NAME = "Users";
 
 var userSchema = new Schema({
     name: {

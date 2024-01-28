@@ -1,11 +1,11 @@
 const _ = require('lodash');
 
-const getInfo = ({ filed = [], object = {} }) => {
-    return _.pick(object, filed);
+const getInfo = ({ field = [], object = {} }) => {
+    return _.pick(object, field);
 }
 
-const getListInfo = ({ filed = [], object = [] }) => {
-    return object.map(item => _.pick(item, filed));
+const getListInfo = ({ field = [], object = [] }) => {
+    return object.map(item => _.pick(item, field));
 }
 
 module.exports = {

@@ -8,7 +8,7 @@ class UserService {
         try {
             const result = await userModel.find();
             return getListInfo({
-                filed: ['name', 'email'],
+                field: ['name', 'email'],
                 object: result
             });
         } catch (error) {
