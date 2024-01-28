@@ -7,8 +7,8 @@ const dev = {
     },
     db: {
         host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        name: process.env.DB_NAME
+        name: process.env.DB_NAME,
+        pass: process.env.DB_PASSWORD
     }
 }
 
@@ -18,9 +18,9 @@ const product = {
         host: process.env.APP_HOST
     },
     db: {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        name: process.env.DB_NAME
+        host: process.env.DB_HOST_PRO,
+        port: process.env.DB_PORT_PRO,
+        name: process.env.DB_NAME_PRO
     }
 }
 
