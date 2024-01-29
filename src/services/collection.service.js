@@ -52,6 +52,20 @@ class CollectionService {
       throw error;
     }
   };
+  static getCollectionDetailsById = async (collectionId) => {
+    try {
+      const collectionDetails = await collectionModel.findById(collectionId);
+
+      if (!collectionDetails) {
+        throw new Error("Collection not found");
+      }
+
+      return collectionDetails;
+    } catch (error) {
+      global.logger.error("Service:: getCollectionDetailsById", error);
+      throw error;
+    }
+  };
 }
 
 module.exports = CollectionService;

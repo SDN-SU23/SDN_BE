@@ -82,6 +82,23 @@ class CollectionController {
       });
     }
   };
+  getCollectionDetails = async (req, res) => {
+    try {
+      const collectionId = req.params.collectionId;
+      const collectionDetails =
+        await CollectionService.getCollectionDetailsById(collectionId);
+
+      return res.status(200).json({
+        status: 200,
+        data: collectionDetails,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        message: error.message,
+      });
+    }
+  };
 }
 
 module.exports = new CollectionController();
