@@ -12,9 +12,10 @@ var followSchema = new Schema(
       unique: true,
     },
     followBy: {
-      type: String,
+      type: Schema.Types.ObjectId,
       trim: true,
       require: true,
+      ref: "User",
     },
   },
   {
