@@ -1,33 +1,35 @@
-const { model, Schema } = require('mongoose');
+const { model, Schema } = require("mongoose");
 
 const DOCUMENT_NAME = "User";
 const COLLECTION_NAME = "Users";
 
-var userSchema = new Schema({
+var userSchema = new Schema(
+  {
     name: {
-        type: String,
-        trim: true,
-        required: true,
+      type: String,
+      trim: true,
+      required: true,
     },
     email: {
-        type: String,
-        trim: true,
-        require: true,
-        unique: true,
+      type: String,
+      trim: true,
+      require: true,
+      unique: true,
     },
     age: {
-        type: Number,
-        trim: true,
-        require: true,
+      type: Number,
+      trim: true,
+      require: true,
     },
     status: {
-        type: Boolean,
-        default: true,
+      type: Boolean,
+      default: true,
     },
-}, {
+  },
+  {
     timestamps: true,
     collection: COLLECTION_NAME,
-});
+  }
+);
 
 module.exports = model(DOCUMENT_NAME, userSchema);
-
