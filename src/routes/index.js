@@ -8,10 +8,9 @@ const router = require("express").Router();
 fs.readdirSync(__dirname).forEach((file) => {
   if (file !== "index.js") {
     const routerName = _.camelCase(file.split(".")[0]);
-    console.log(routerName);
     try {
       router.use(`/${routerName}`, require(`./${file}`));
-    } catch (err) {}
+    } catch (err) { }
   }
 });
 

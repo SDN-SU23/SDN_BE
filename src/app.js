@@ -21,5 +21,6 @@ global.logger = logger;
 app.use("/v1/api", require("./routes/index"));
 // init db
 require("./dbs/init.mongoDB");
-
+// init cloud
+require('./configs/cloudinary.config');
 module.exports = app;

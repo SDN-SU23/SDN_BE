@@ -9,6 +9,12 @@ const dev = {
         host: process.env.DB_HOST,
         name: process.env.DB_NAME,
         pass: process.env.DB_PASSWORD
+    },
+    cloud: {
+        name: process.env.CLOUD_NAME,
+        api_key: process.env.CLOUD_API_KEY,
+        api_secret: process.env.CLOUD_API_SECRT
+
     }
 }
 
