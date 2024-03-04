@@ -35,8 +35,8 @@ const artworkSchema = new Schema(
       type: Number,
     },
     category: {
-      type: String,
-      enum: categoryEnum,
+      type: Array,
+      required: true,
     },
   },
   {

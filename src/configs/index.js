@@ -15,7 +15,12 @@ const dev = {
         api_key: process.env.CLOUD_API_KEY,
         api_secret: process.env.CLOUD_API_SECRT
 
-    }
+    },
+    oauth: {
+        clientID: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        callbackURL: process.env.OAUTH_CB
+    },
 }
 
 const product = {

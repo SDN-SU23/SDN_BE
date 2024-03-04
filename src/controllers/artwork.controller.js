@@ -6,10 +6,13 @@ const ArtworkService = require('../services/artwork.service')
 class ArtworkController {
     getListArtwork = async (req, res) => {
         try {
-            console.log('controller')
+
             return res.status(200).json({
                 status: 200,
-                data: await ArtworkService.getListArtwork(),
+                data: await ArtworkService.getListArtwork({
+                    page: req.query.page || 0,
+                    category: req.query.category,
+                }),
             })
         } catch (error) {
             return res.status(500).json({

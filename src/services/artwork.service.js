@@ -1,12 +1,18 @@
 'use strict'
 
 const artworkModel = require('../models/artwork.model')
-const { getListInfo, getInfo } = require('../utils')
+const { getListInfo } = require('../utils')
 
 class ArtworkService {
-    static getListArtwork = async () => {
+    static getListArtwork = async ({ page, category }) => {
         try {
-            const result = await artworkModel.find({})
+            category = category.split(',')
+            const result = await artworkModel
+                .find({
+                    category: { $in: category },
+                })
+                .limit(10)
+                .skip(page * 10)
             return getListInfo({
                 // field: ["name", "email"],
                 object: result,
