@@ -48,6 +48,10 @@ app.get('/auth/google',
         scope: ['profile', 'email']
     })
 )
-app.get('/auth/google/callback', passport.authenticate('google'));
+app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+    return res.json({
+        req: req
+    })
+});
 
 module.exports = app;

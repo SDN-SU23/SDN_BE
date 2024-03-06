@@ -11,7 +11,7 @@ const logger = winston.createLogger({
             ),
         }),
         new winston.transports.File({
-            filename: `src/logs/${time.getNowDate()}.log`,
+            filename: `./logs/${time.getNowDate()}.log`,
             format: winston.format.combine(
                 winston.format.timestamp({
                     format: 'YYYY-MM-DD HH:mm:ss',

@@ -14,6 +14,4 @@ fs.readdirSync(__dirname).forEach((file) => {
   }
 });
 
-router.use('/', require('./acess/upload.route'));
-
 module.exports = router;
