@@ -4,19 +4,46 @@ const artworkModel = require('../models/artwork.model')
 const { getListInfo } = require('../utils')
 
 class ArtworkService {
-    static getListArtwork = async ({ page, category }) => {
+    static getListArtwork = async (query) => {
         try {
-            category = category.split(',')
+            let { searchName, categoryName, currentPage, pageSize } = query
+            // init filter
+            let filter = {}
+            // check if category is an array
+            if (categoryName) {
+                categoryName = category.split(',')
+                filter.category = { $in: categoryName }
+            }
+            // check searchName 
+            if (searchName) {
+                filter.name = { $regex: searchName, $options: 'i' };
+            }
+            // return list of artwork
             const result = await artworkModel
-                .find({
-                    category: { $in: category },
-                })
-                .limit(10)
-                .skip(page * 10)
-            return getListInfo({
-                // field: ["name", "email"],
-                object: result,
+                .find(filter)
+                .limit(pageSize)
+                .skip((currentPage - 1) * pageSize)
+                .populate('authorId')
+                .lean();
+            // get total page
+            const totalPage = Math.ceil(result.length / pageSize)
+            // return filter data and total page
+            const artwork = result.map((item) => {
+                return {
+                    artworkId: item._id,
+                    artworkURL: item.imageURL,
+                    authorAvatar: item.authorId.avatar,
+                    authorName: item.authorId.name,
+                }
             })
+
+            return {
+                artwork,
+                currentPage: currentPage,
+                totalPage: totalPage,
+                pageSize: pageSize
+            };
+
         } catch (error) {
             global.logger.error('Service:: getListArtwork', error)
             throw error

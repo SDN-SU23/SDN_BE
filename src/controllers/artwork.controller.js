@@ -9,10 +9,7 @@ class ArtworkController {
 
             return res.status(200).json({
                 status: 200,
-                data: await ArtworkService.getListArtwork({
-                    page: req.query.page || 0,
-                    category: req.query.category,
-                }),
+                data: await ArtworkService.getListArtwork(req.query)
             })
         } catch (error) {
             return res.status(500).json({

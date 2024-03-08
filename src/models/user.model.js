@@ -21,9 +21,18 @@ var userSchema = new Schema(
       trim: true,
       require: true,
     },
+    avatarUrl: {
+      type: String,
+      trim: true
+    },
     status: {
       type: Boolean,
       default: true,
+    },
+    role: {
+      type: String,
+      enum: ['Audience', 'Admin', 'Creator'],
+      default: 'Audience'
     },
   },
   {

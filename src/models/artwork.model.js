@@ -21,18 +21,20 @@ const artworkSchema = new Schema(
       trim: true,
     },
     authorId: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    views: {
-      type: Number,
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     commentNumber: {
       type: Number,
+      default: 0,
     },
     reactNumber: {
       type: Number,
+      default: 0,
+    },
+    price: {
+      type: Number,
+      required: true,
     },
     category: {
       type: Array,
