@@ -5,7 +5,7 @@ const passport = require('../configs/passport.config');
 
 const HEADER = {
     'AUTHENTICATION': 'x-authentication',
-    'USER_ID': 'x-api-id',
+    'USER_ID': 'x-api-email',
     'REFRESH_TOKEN': 'x-refresh-token'
 }
 

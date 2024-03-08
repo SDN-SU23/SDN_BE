@@ -1,6 +1,5 @@
 'use strict'
 
-const { isValidObjectId } = require('mongoose')
 const ArtworkService = require('../services/artwork.service')
 
 class ArtworkController {
@@ -46,12 +45,12 @@ class ArtworkController {
 
     createArtwork = async (req, res) => {
         try {
-            const data = await ArtworkService.createArtwork(req.body)
-
-            return res.status(200).json({
-                status: 200,
-                data: data,
-            })
+            return res
+                .status(201)
+                .json({
+                    status: 201,
+                    data: await ArtworkService.createArtwork(req.body, req.user)
+                })
         } catch (error) {
             return res.status(500).json({
                 status: 500,

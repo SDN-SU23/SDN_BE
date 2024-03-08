@@ -1,6 +1,7 @@
 'use strict'
 
 const artworkModel = require('../models/artwork.model')
+const reactModel = require('../models/react.model')
 const { getListInfo } = require('../utils')
 
 class ArtworkService {
@@ -52,19 +53,27 @@ class ArtworkService {
 
     static getArtworkDetail = async (artworkId) => {
         try {
-            const result = await artworkModel.findById(artworkId)
+            const result = await artworkModel.findById(artworkId).lean()
+            // get react of artwork
+            const reactList = await reactModel.find({ artworkId: artworkId }).lean()
 
-            return result
+            return {
+                ...result,
+                reactList
+            }
         } catch (error) {
             global.logger.error('Service:: getArtworkDetail', error)
             throw error
         }
     }
 
-    static createArtwork = async (data) => {
+    static createArtwork = async (data, user) => {
         try {
-            const result = await artworkModel.create(data)
-            return result
+            const result = await artworkModel.create({
+                ...data,
+                authorId: user._id,
+            })
+            return result;
         } catch (error) {
             global.logger.error('Service:: createArtwork', error)
             throw error
