@@ -21,6 +21,11 @@ const checkIsLogin = async (req, res, next) => {
     const user = await userModel.findOne({
         email: userMail
     });
+    if (!user) {
+        return res
+            .status(401)
+            .json({ message: 'User is not found' });
+    }
     // check access token is valid
     const accessToken = req.headers[HEADER.AUTHENTICATION];
     if (!accessToken) {

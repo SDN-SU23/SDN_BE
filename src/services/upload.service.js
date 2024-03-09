@@ -26,14 +26,28 @@ const uploadImageFromLocal = async ({ path, imageName, userId = '123' }) => {
             path,
             {
                 public_id: `${imageName}`,
-                folder: `artWork / ${userId}`
-            })
+                folder: `artWork/1`,
+                fetch_format: 'auto',
+            }
+        )
+
+        console.log('result : ', result);
 
         return {
             imageURL: result.secure_url,
         }
     } catch (error) {
         console.log('Error in uploading the file : ', error);
+    }
+}
+
+const getImageFromUrl = async (url) => {
+    try {
+        const result = await cloudinary.image(url);
+
+        return result;
+    } catch (error) {
+        console.log(`error`, error);
     }
 }
 

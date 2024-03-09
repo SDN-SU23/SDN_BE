@@ -55,8 +55,15 @@ class ArtworkService {
         try {
             const result = await artworkModel.findById(artworkId).lean()
             // get react of artwork
-            const reactList = await reactModel.find({ artworkId: artworkId }).lean()
-
+            const reactList = await reactModel.find({ artworkId: artworkId }).populate('userId').lean();
+            if (reactList) {
+                reactList.map((item) => {
+                    return {
+                        authorAvatar: item.userId.avatarUrl,
+                        authorName: item.userId.name,
+                    }
+                })
+            }
             return {
                 ...result,
                 reactList
