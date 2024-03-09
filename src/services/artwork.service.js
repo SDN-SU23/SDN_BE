@@ -92,7 +92,7 @@ class ArtworkService {
             if (commentList) {
                 commentList = commentList.map((item) => {
                     return {
-                        authorAvatar: item.authorId.avatar,
+                        authorAvatar: item.authorId.avatarUrl,
                         authorName: item.authorId.name,
                         content: item.content,
                     }
