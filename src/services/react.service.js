@@ -14,10 +14,10 @@ class ReactService {
         }
     }
 
-    static deleteReact = async (params) => {
+    static deleteReact = async (query) => {
         try {
             // get artworkId and userId from params
-            const { artworkId, userId } = params;
+            const { artworkId, userId } = query;
             // delete a react
             const result = await reactModel.findOneAndDelete({
                 artworkId: artworkId,

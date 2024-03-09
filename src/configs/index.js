@@ -21,6 +21,12 @@ const dev = {
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         callbackURL: process.env.OAUTH_CB
     },
+    payment: {
+        vnp_TmnCode: process.env.VNP_TMNCODE,
+        vnp_HashSecret: process.env.VNP_HASHSECRET,
+        vnp_Url: process.env.VNP_URL,
+        vnp_ReturnUrl: process.env.VNP_RETURNURL
+    }
 }
 
 const product = {

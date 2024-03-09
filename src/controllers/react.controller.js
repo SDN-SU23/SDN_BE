@@ -24,7 +24,7 @@ class ReactController {
                 .status(200)
                 .json({
                     message: 'React deleted successfully',
-                    data: await ReactService.deleteReact(req.params)
+                    data: await ReactService.deleteReact(req.query)
                 })
         } catch (error) {
             return res
