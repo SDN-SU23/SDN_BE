@@ -10,24 +10,24 @@ class UserService {
 
   static getListUser = async (query) => {
     try {
+      let { searchName, searchRole, curentPage, pageSize } = query;
+
       let filter = {};
-      if (query.role) {
-        filter.role = query.role;
-      }
-      if (query.name) {
-        filter.name = { $regex: query.name, $options: "i" };
+
+      if (searchName) {
+        filter.name = { $regex: searchName, $options: "i" };
       } else {
         filter.name = { $regex: "", $options: "i" };
       }
 
-      const result = await userModel
-        .find({ filter })
-        .limit(query.pageSize)
-        .skip((query.currentPage - 1) * query.pageSize);
-      return getListInfo({
-        field: ["name", "email"],
-        object: result,
-      });
+      if (searchRole) {
+        searchRole = searchRole.split(',')
+        filter.role = { $in: searchRole }
+      }
+
+      const result = await userModel.find(filter).limit(pageSize).skip((curentPage - 1) * pageSize);
+
+      return result;
     } catch (error) {
       global.logger.error("Service:: getListUser", error);
       throw error;
