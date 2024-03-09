@@ -95,6 +95,7 @@ class ArtworkService {
                         authorAvatar: item.authorId.avatarUrl,
                         authorName: item.authorId.name,
                         content: item.content,
+                        commentId: item._id,
                     }
                 })
             }
