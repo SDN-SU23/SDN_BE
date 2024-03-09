@@ -31,7 +31,8 @@ class AuthenService {
             return {
                 accessToken: tokenPair.accessToken,
                 refreshToken: tokenPair.refreshToken,
-                userMail: email
+                userMail: email,
+                userId: user._id,
             };
 
         } catch (error) {

@@ -7,4 +7,6 @@ router.post("/", userController.createUser);
 router.get('/:userId', userController.getUserById)
 router.get('profile/:userId', userController.getProfileById)
 router.put('/changePassword/:userId', userController.changePassword)
+router.put('/user/profile/:userId', userController.updateUser)
+router.delete('/:userId', userController.deleteUser)
 module.exports = router;

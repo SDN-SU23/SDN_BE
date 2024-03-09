@@ -89,10 +89,32 @@ class ArtworkService {
 
     static deleteArtwork = async (artworkId) => {
         try {
-            const result = await artworkModel.findByIdAndDelete(artworkId)
+            const result = await artworkModel.findByIdAndUpdate(artworkId, { status: 'private' });
             return result
         } catch (error) {
             global.logger.error('Service:: deleteArtwork', error)
+            throw error
+        }
+    }
+
+    static updateArtwork = async (artworkId, data) => {
+        try {
+            const result = await artworkModel.findByIdAndUpdate(artworkId, data, { new: true })
+            return result
+        }
+        catch (error) {
+            global.logger.error('Service:: updateArtwork', error)
+            throw error
+        }
+    }
+
+    static updateArtworkByAdmin = async (artworkId, status) => {
+        try {
+            const result = await artworkModel.findByIdAndUpdate(artworkId, { status: status }, { new: true })
+            return result
+        }
+        catch (error) {
+            global.logger.error('Service:: updateArtworkByAdmin', error)
             throw error
         }
     }

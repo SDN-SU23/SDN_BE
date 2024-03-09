@@ -11,6 +11,15 @@ class TransactionController {
             return res.status(400).json({ message: error.message });
         }
     }
+
+    getListTransactionByUserId = async (req, res) => {
+        try {
+            const response = await TransactionService.getListTransactionByUserId(req.query, req.params.userId);
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    }
 }
 
 module.exports = new TransactionController();

@@ -100,6 +100,23 @@ class ReportController {
       });
     }
   };
+
+  updateStatusReport = async (req, res) => {
+    try {
+      const updatedReport = await ReportService.updateStatusReport(req.params.reportId, req.body.status);
+
+      res.status(200).json({
+        status: 200,
+        data: updatedReport,
+      });
+    } catch (error) {
+      console.error("Error updating report status:", error);
+      res.status(500).json({
+        status: 500,
+        message: error.message,
+      });
+    }
+  };
 }
 
 module.exports = new ReportController();

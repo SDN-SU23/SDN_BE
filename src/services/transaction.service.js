@@ -16,6 +16,25 @@ class TransactionService {
             throw new Error(error.message);
         }
     }
+
+    static getListTransactionByUserId = async (query, userId) => {
+        try {
+            const response = await transactionModel
+                .find({ senderId: userId })
+                .limit(query.pageSize)
+                .skip((query.currentPage - 1) * query.pageSize);
+            // count total page
+            const totalPage = Math.ceil(response.length / query.pageSize);
+            return {
+                response,
+                totalPage,
+                pageSize: query.pageSize,
+                currentPage: query.currentPage,
+            };
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
 
 module.exports = TransactionService;

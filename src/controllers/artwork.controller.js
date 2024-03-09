@@ -83,6 +83,56 @@ class ArtworkController {
             })
         }
     }
+
+    updateArtwork = async (req, res) => {
+        try {
+            const artworkId = req.params.artworkId
+
+            const result = await ArtworkService.updateArtwork(artworkId, req.body)
+
+            if (!result) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Artwork not found',
+                })
+            }
+
+            return res.status(200).json({
+                status: 200,
+                data: result,
+            })
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: error.message,
+            })
+        }
+    }
+
+    updateArtworkByAdmin = async (req, res) => {
+        try {
+            const artworkId = req.params.artworkId
+
+            const result = await ArtworkService.updateArtworkByAdmin(artworkId, req.body)
+
+            if (!result) {
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Artwork not found',
+                })
+            }
+
+            return res.status(200).json({
+                status: 200,
+                data: result,
+            })
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: error.message,
+            })
+        }
+    }
 }
 
 module.exports = new ArtworkController()

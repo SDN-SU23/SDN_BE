@@ -8,9 +8,22 @@ const bcrypt = require('bcrypt');
 
 class UserService {
 
-  static getListUser = async () => {
+  static getListUser = async (query) => {
     try {
-      const result = await userModel.find();
+      let filter = {};
+      if (query.role) {
+        filter.role = query.role;
+      }
+      if (query.name) {
+        filter.name = { $regex: query.name, $options: "i" };
+      } else {
+        filter.name = { $regex: "", $options: "i" };
+      }
+
+      const result = await userModel
+        .find({ filter })
+        .limit(query.pageSize)
+        .skip((query.currentPage - 1) * query.pageSize);
       return getListInfo({
         field: ["name", "email"],
         object: result,
@@ -93,6 +106,30 @@ class UserService {
             password: newPass
           }
         );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static updateUser = async (userId, data) => {
+    try {
+      const result = await userModel.findByIdAndUpdate
+        (
+          userId,
+          {
+            ...data
+          }
+        );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static deleteUser = async (userId) => {
+    try {
+      const result = await userModel.findByIdAndUpdate(userId, { status: false })
       return result;
     } catch (error) {
       throw error;

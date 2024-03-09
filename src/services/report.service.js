@@ -28,13 +28,15 @@ class ReportService {
     }
   };
 
-  static updateReport = async (id, newData) => {
+  static updateStatusReport = async (id, status) => {
     try {
-      return await Report.findByIdAndUpdate(id, newData, { new: true });
-    } catch (error) {
-      throw new Error("Error updating report: " + error.message);
+      return await Report.findByIdAndUpdate
+        (id, { status: status }, { new: true });
     }
-  };
+    catch (error) {
+      throw new Error("Error updating report status: " + error.message);
+    }
+  }
 
   static deleteReport = async (id) => {
     try {

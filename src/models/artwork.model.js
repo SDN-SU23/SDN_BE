@@ -40,6 +40,11 @@ const artworkSchema = new Schema(
       type: Array,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["public", "private", "isPending"],
+      default: "public",
+    },
   },
   {
     timestamps: true,

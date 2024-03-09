@@ -10,7 +10,7 @@ class UserController {
                 .status(200)
                 .json({
                     status: 200,
-                    data: await UserService.getListUser()
+                    data: await UserService.getListUser(req.query)
                 })
 
         } catch (error) {
@@ -89,6 +89,48 @@ class UserController {
     changePassword = async (req, res) => {
         try {
             const data = await UserService.changePassword(req.params.userId, req.body.password);
+
+            return res
+                .status(200)
+                .json({
+                    status: 200,
+                    data: data
+                })
+
+        } catch (error) {
+            return res
+                .status(500)
+                .json({
+                    status: 500,
+                    message: error.message
+                })
+        }
+    }
+
+    updateUser = async (req, res) => {
+        try {
+            const data = await UserService.updateUser(req.params.userId, req.body);
+
+            return res
+                .status(200)
+                .json({
+                    status: 200,
+                    data: data
+                })
+
+        } catch (error) {
+            return res
+                .status(500)
+                .json({
+                    status: 500,
+                    message: error.message
+                })
+        }
+    }
+
+    deleteUser = async (req, res) => {
+        try {
+            const data = await UserService.deleteUser(req.params.userId);
 
             return res
                 .status(200)
