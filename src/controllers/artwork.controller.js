@@ -133,6 +133,20 @@ class ArtworkController {
             })
         }
     }
+
+    getArtWorkByAdmin = async (req, res) => {
+        try {
+            return res.status(200).json({
+                status: 200,
+                data: await ArtworkService.getArtWorkByAdmin(req.query)
+            })
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: error.message,
+            })
+        }
+    }
 }
 
 module.exports = new ArtworkController()

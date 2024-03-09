@@ -118,6 +118,42 @@ class ArtworkService {
             throw error
         }
     }
+
+    static getArtWorkByAdmin = async (query) => {
+        try {
+            let { searchName, currentPage, pageSize, status } = query
+            // init filter
+            let filter = {}
+            // check searchName 
+            if (searchName) {
+                filter.name = { $regex: searchName, $options: 'i' };
+            }
+            // check status
+            if (status) {
+                filter.status = status
+            }
+            // return list of artwork
+            const result = await artworkModel
+                .find(filter)
+                .limit(pageSize)
+                .skip((currentPage - 1) * pageSize)
+                .populate('authorId')
+                .lean();
+            // get total page
+            const totalPage = Math.ceil(result.length / pageSize)
+
+            return {
+                result,
+                currentPage: currentPage,
+                totalPage: totalPage,
+                pageSize: pageSize
+            };
+
+        } catch (error) {
+            global.logger.error('Service:: getArtWorkByAdmin', error)
+            throw error
+        }
+    }
 }
 
 module.exports = ArtworkService

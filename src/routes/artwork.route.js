@@ -9,5 +9,6 @@ router.delete("/:artworkId", artworkController.deleteArtwork);
 router.get("/:artworkId", artworkController.getArtworkDetail);
 router.put("/:artworkId", artworkController.updateArtwork);
 router.put("/updateByAdmin/:artworkId", artworkController.updateArtworkByAdmin);
+router.get("/getArtWorkByAdmin", artworkController.getArtWorkByAdmin);
 
 module.exports = router;
