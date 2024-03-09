@@ -16,19 +16,14 @@ class FollowController {
       });
     }
   };
-  updateFollowListById = async (req, res) => {
-    try {
-      const followId = req.params.followId;
-      const dataToUpdate = req.body;
 
-      const updatedData = await FollowService.updateFollowList(
-        followId,
-        dataToUpdate
-      );
+  createNewFollow = async (req, res) => {
+    try {
+      const result = await FollowService.createNewFollow(req.params.authorId, req.body.userId);
 
       return res.status(200).json({
         status: 200,
-        data: updatedData,
+        data: result,
       });
     } catch (error) {
       return res.status(500).json({
@@ -37,5 +32,22 @@ class FollowController {
       });
     }
   };
+
+  deleteFollow = async (req, res) => {
+    try {
+      const result = await FollowService.deleteFollow(req.params.authorId, req.query.userId);
+
+      return res.status(200).json({
+        status: 200,
+        data: result,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        message: error.message,
+      });
+    }
+  };
+
 }
 module.exports = new FollowController();

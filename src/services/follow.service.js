@@ -15,23 +15,34 @@ class FollowService {
       throw error;
     }
   };
-  static updateFollowList = async (followId, newData) => {
+
+  static createNewFollow = async (authorId, userId) => {
     try {
-      const result = await followModel.findByIdAndUpdate(
-        followId,
-        { $set: newData },
-        { new: true }
+      const result = await followModel.create(
+        {
+          userId: authorId,
+          followBy: userId,
+        }
       );
-
-      if (!result) {
-        throw new Error("Follow not found");
-      }
-
       return result;
     } catch (error) {
-      global.logger.error("Service:: updateFollowList", error);
+      global.logger.error("Service:: createNewFollow", error);
       throw error;
     }
   };
+
+  static deleteFollow = async (authorId, userId) => {
+    try {
+      const result = await followModel.findOneAndDelete({
+        userId: authorId,
+        followBy: userId,
+      });
+      return result;
+    } catch (error) {
+      global.logger.error("Service:: deleteFollow", error);
+      throw error;
+    }
+  };
+
 }
 module.exports = FollowService;

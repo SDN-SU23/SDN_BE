@@ -3,6 +3,7 @@ const followController = require("../controllers/follow.controller");
 const router = express.Router();
 
 router.get("/", followController.getFollowList);
-router.put("/:followId", followController.updateFollowListById);
+router.post('/:authorId', followController.createNewFollow);
+router.delete('/:authorId', followController.deleteFollow);
 
 module.exports = router;
