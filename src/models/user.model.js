@@ -28,7 +28,6 @@ var userSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ['men', 'women'],
       required: true,
     },
     avatarUrl: {
