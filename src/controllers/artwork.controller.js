@@ -110,16 +110,8 @@ class ArtworkController {
 
     updateArtworkByAdmin = async (req, res) => {
         try {
-            const artworkId = req.params.artworkId
 
-            const result = await ArtworkService.updateArtworkByAdmin(artworkId, req.body)
-
-            if (!result) {
-                return res.status(404).json({
-                    status: 404,
-                    message: 'Artwork not found',
-                })
-            }
+            const result = await ArtworkService.updateArtworkByAdmin(req.params.artworkId, req.body)
 
             return res.status(200).json({
                 status: 200,
