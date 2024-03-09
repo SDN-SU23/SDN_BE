@@ -2,6 +2,7 @@
 const bcrypy = require('bcrypt');
 const cryto = require('node:crypto');
 const userModel = require('../models/user.model');
+const { createTokenPair } = require('../helpers/jwt.helper');
 
 class AuthenService {
     static login = async ({ email, password }) => {
@@ -24,8 +25,18 @@ class AuthenService {
                     format: 'pem',
                 }
             });
-        } catch (error) {
+            // create token pair 
+            const tokenPair = createTokenPair({ email, publicKey, privateKey });
 
+            return {
+                accessToken: tokenPair.accessToken,
+                refreshToken: tokenPair.refreshToken,
+                userMail: email
+            };
+
+        } catch (error) {
+            global.logger.error('Service:: login', error);
+            throw error;
         }
     }
 }

@@ -69,10 +69,12 @@ class ArtworkController {
                 data
             )
 
-            return res.status(200).json({
-                status: 200,
-                data: updatedData,
-            })
+            return res
+                .status(200)
+                .json({
+                    status: 200,
+                    data: updatedData,
+                })
         } catch (error) {
             return res.status(500).json({
                 status: 500,

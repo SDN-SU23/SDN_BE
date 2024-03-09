@@ -30,8 +30,7 @@ const uploadImageFromLocal = async ({ path, imageName, userId = '123' }) => {
             })
 
         return {
-            image_url: result.secure_url,
-            shopId: 8496
+            imageURL: result.secure_url,
         }
     } catch (error) {
         console.log('Error in uploading the file : ', error);

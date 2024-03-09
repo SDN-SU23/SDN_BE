@@ -33,6 +33,8 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
     } catch (error) {
         throw error;
     }
+}
 
-
+module.exports = {
+    createTokenPair
 }
