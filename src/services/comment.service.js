@@ -36,8 +36,7 @@ class CommentService {
         try {
             const result = await commentModel.findByIdAndUpdate(
                 commentId,
-                { $set: comment },
-                { new: true }
+                { $set: comment }
             )
 
             if (!result) {
