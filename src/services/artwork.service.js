@@ -53,7 +53,25 @@ class ArtworkService {
 
     static getArtworkDetail = async (artworkId) => {
         try {
-            const result = await artworkModel.findById(artworkId).lean()
+            let result = await artworkModel.findById(artworkId).populate('authorId').lean();
+            if (result) {
+                result = {
+                    title: result.title,
+                    imageURL: result.imageURL,
+                    description: result.description,
+                    authorName: result.authorId.name,
+                    authorAvatar: result.authorId.avatarUrl,
+                    category: result.category,
+                    status: result.status,
+                    createdAt: result.createdAt,
+                    updatedAt: result.updatedAt,
+                    price: result.price,
+                    status: result.status,
+                    commentNumber: result.commentNumber,
+                    reactNumber: result.reactNumber,
+
+                }
+            }
             // get react of artwork
             let reactList = await reactModel.find({ artworkId: artworkId }).populate('userId').lean();
 
