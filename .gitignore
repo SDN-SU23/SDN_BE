@@ -1,3 +1,4 @@
 node_modules
 logs
-./src/upload
+src/upload
+src/text.js
