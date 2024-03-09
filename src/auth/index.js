@@ -73,7 +73,8 @@ const checkIsLogin = async (req, res, next) => {
             .status(401)
             .json({ message: 'Token is invalid' });
     }
-
+    // set req user === user
+    req.user = user;
     return next()
 }
 

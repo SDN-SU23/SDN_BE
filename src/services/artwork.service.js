@@ -2,7 +2,7 @@
 
 const artworkModel = require('../models/artwork.model')
 const reactModel = require('../models/react.model')
-const { getListInfo } = require('../utils')
+const commentModel = require('../models/comment.model')
 
 class ArtworkService {
     static getListArtwork = async (query) => {
@@ -64,7 +64,19 @@ class ArtworkService {
                     }
                 })
             }
+            // get comment of artwork
+            const commentList = await commentModel.find({ artworkId: artworkId }).populate('userId').lean();
+
+            commentList.map((item) => {
+                return {
+                    authorAvatar: item.userId.avatarUrl,
+                    authorName: item.userId.name,
+                }
+            })
+
+
             return {
+                commentList,
                 ...result,
                 reactList
             }
