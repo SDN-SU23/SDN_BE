@@ -56,28 +56,6 @@ class ReportController {
     }
   };
 
-  updateReport = async (req, res) => {
-    try {
-      const updatedReport = await ReportService.updateReport(req.params.reportId, req.body);
-      if (!updatedReport) {
-        return res.status(404).json({
-          status: 404,
-          message: "Report not found",
-        });
-      }
-      res.status(200).json({
-        status: 200,
-        data: updatedReport,
-      });
-    } catch (error) {
-      console.error("Error updating report:", error);
-      res.status(500).json({
-        status: 500,
-        message: error.message,
-      });
-    }
-  };
-
   deleteReport = async (req, res) => {
     try {
       const deletedReport = await ReportService.deleteReport(req.params.reportId);
