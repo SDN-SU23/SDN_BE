@@ -71,6 +71,7 @@ class UserService {
       });
 
       return {
+        userId: user._id,
         avatar: user.avatarUrl,
         name: user.name,
         artWorkList,
