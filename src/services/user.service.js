@@ -27,7 +27,12 @@ class UserService {
 
       const result = await userModel.find(filter).limit(pageSize).skip((curentPage - 1) * pageSize);
 
-      return result;
+      return {
+        result,
+        totalPage: Math.ceil(result.length / pageSize),
+        curentPage: curentPage,
+        pageSize: pageSize,
+      };
     } catch (error) {
       global.logger.error("Service:: getListUser", error);
       throw error;
