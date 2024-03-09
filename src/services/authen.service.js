@@ -26,7 +26,7 @@ class AuthenService {
                 }
             });
             // create token pair 
-            const tokenPair = createTokenPair({ email, publicKey, privateKey });
+            const tokenPair = await createTokenPair({ email, publicKey, privateKey });
 
             return {
                 accessToken: tokenPair.accessToken,
