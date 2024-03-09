@@ -40,6 +40,31 @@ class AuthenService {
             throw error;
         }
     }
+
+    static register = async (data) => {
+        try {
+            // check mail exist
+            const user = await userModel.findOne({ email: data.email });
+            if (user) throw new Error('Mail is exist');
+            // hash pass
+            const hashPass = await bcrypy.hash(data.password, 10);
+            // create user
+            const result = await userModel.create({
+                email: data.email,
+                password: hashPass,
+                name: data.name,
+                age: data.age,
+                avatarUrl: data.avatarUrl,
+                gender: data.gender,
+                yob: data.yob
+            });
+            return result;
+        }
+        catch (error) {
+            global.logger.error('Service:: register', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = AuthenService;

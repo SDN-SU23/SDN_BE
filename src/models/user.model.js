@@ -16,10 +16,20 @@ var userSchema = new Schema(
       require: true,
       unique: true,
     },
-    age: {
+    yob: {
       type: Number,
-      trim: true,
-      require: true,
+      min: 1900,
+      max: 2021,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ['men', 'women'],
+      required: true,
     },
     avatarUrl: {
       type: String,
