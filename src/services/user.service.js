@@ -94,16 +94,16 @@ class UserService {
     }
   }
 
-  static changePassword = async (userId, password) => {
+  static changePassword = async (userId, password, oldPassword) => {
     try {
       const user = await userModel.findById(userId);
       // check password
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
       if (!isMatch) {
-        throw new Error('Password is not match');
+        throw new Error('old Password is not match');
       }
       // hash password
-      const newPass = await bcrypt.hash(password, 8);
+      const newPass = await bcrypt.hash(password, 10);
       // update password
       const result = await userModel.findByIdAndUpdate
         (
