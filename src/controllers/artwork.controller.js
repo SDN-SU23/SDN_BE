@@ -59,30 +59,6 @@ class ArtworkController {
         }
     }
 
-    updateArtwork = async (req, res) => {
-        try {
-            const artworkId = req.params.artworkId
-            const data = req.body
-
-            const updatedData = await ArtworkService.updateArtwork(
-                artworkId,
-                data
-            )
-
-            return res
-                .status(200)
-                .json({
-                    status: 200,
-                    data: updatedData,
-                })
-        } catch (error) {
-            return res.status(500).json({
-                status: 500,
-                message: error.message,
-            })
-        }
-    }
-
     deleteArtwork = async (req, res) => {
         try {
             const artworkId = req.params.artworkId

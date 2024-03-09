@@ -5,7 +5,6 @@ const { uploadDisk } = require("../configs/multer.config");
 
 router.get("/", artworkController.getListArtwork);
 router.post("/", artworkController.createArtwork);
-router.put("/:artworkId", artworkController.updateArtwork);
 router.delete("/:artworkId", artworkController.deleteArtwork);
 router.get("/:artworkId", artworkController.getArtworkDetail);
 

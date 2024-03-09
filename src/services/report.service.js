@@ -13,7 +13,8 @@ class ReportService {
 
   static createReport = async (data) => {
     try {
-      return await Report.create(data);
+      const result = await Report.create(data);
+      return result;
     } catch (error) {
       throw new Error("Error creating report: " + error.message);
     }

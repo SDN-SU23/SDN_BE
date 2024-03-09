@@ -87,25 +87,6 @@ class ArtworkService {
         }
     }
 
-    static updateArtwork = async (artworkId, newData) => {
-        try {
-            const result = await artworkModel.findByIdAndUpdate(
-                artworkId,
-                { $set: newData },
-                { new: true }
-            )
-
-            if (!result) {
-                throw new Error('Artwork not found')
-            }
-
-            return result
-        } catch (error) {
-            global.logger.error('Service:: updateArtwork', error)
-            throw error
-        }
-    }
-
     static deleteArtwork = async (artworkId) => {
         try {
             const result = await artworkModel.findByIdAndDelete(artworkId)
