@@ -70,23 +70,10 @@ class CommentController {
 
     createCommentChildren = async (req, res) => {
         try {
-            const commentParentId = req.params.commentParentId
-            const comment = req.body
 
-            const result = await CommentService.createCommentChildren(
-                commentParentId,
-                comment
-            )
-
-            if (!result) {
-                return res.status(404).json({
-                    status: '404 Not Found',
-                    message: 'Commnent not found',
-                })
-            }
             return res.status(200).json({
                 status: 200,
-                data: result,
+                data: await CommentService.createCommentChildren(req.params.commentParentId, req.body),
             })
         } catch (error) {
             return res.status(500).json({

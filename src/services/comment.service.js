@@ -52,14 +52,21 @@ class CommentService {
     }
     static createCommentChildren = async (commentParentId, comment) => {
         try {
-            const result = await commentModel.create(comment)
-            console.log(result._id.toString())
-            const addChildren = await commentModel.findOneAndUpdate(
-                { _id: commentParentId },
-                { $push: { comment_children: result._id.toString() } },
-                { new: true }
-            )
+            // Check if comment parent exist
+            const isCommentParentExist = await commentModel.findById(commentParentId);
+            if (!isCommentParentExist) {
+                throw new Error('Comment parent not found')
+            }
+            // Update comment childern to array
+            const result = await commentModel.findByIdAndUpdate({
+                _id: commentParentId
+            }, {
+                $push: {
+                    comment_children: comment
+                }
+            });
             return result
+
         } catch (error) {
             global.logger.error('Service:: createCommentChildren', error)
             throw error

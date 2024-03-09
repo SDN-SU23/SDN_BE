@@ -23,10 +23,9 @@ const commentSchema = new Schema(
             ref: 'Artwork',
         },
         comment_children: {
-            type: [Schema.Types.ObjectId],
-            trim: true,
-            ref: 'Comment',
-        },
+            type: Array,
+            default: [],
+        }
     },
     {
         timestamps: true,
