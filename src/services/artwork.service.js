@@ -55,29 +55,35 @@ class ArtworkService {
         try {
             const result = await artworkModel.findById(artworkId).lean()
             // get react of artwork
-            const reactList = await reactModel.find({ artworkId: artworkId }).populate('userId').lean();
+            let reactList = await reactModel.find({ artworkId: artworkId }).populate('userId').lean();
+
             if (reactList) {
-                reactList.map((item) => {
+                reactList = reactList.map((item) => {
                     return {
                         authorAvatar: item.userId.avatarUrl,
                         authorName: item.userId.name,
                     }
                 })
             }
+
+            console.log(reactList)
+
             // get comment of artwork
-            const commentList = await commentModel.find({ artworkId: artworkId }).populate('authorId').lean();
+            let commentList = await commentModel.find({ artworkId: artworkId }).populate('authorId').lean();
 
-            commentList.map((item) => {
-                return {
-                    authorAvatar: item.authorId.avatarUrl,
-                    authorName: item.authorId.name,
-                }
-            })
-
+            if (commentList) {
+                commentList = commentList.map((item) => {
+                    return {
+                        authorAvatar: item.authorId.avatar,
+                        authorName: item.authorId.name,
+                        content: item.content,
+                    }
+                })
+            }
 
             return {
                 commentList,
-                ...result,
+                artwork: result,
                 reactList
             }
         } catch (error) {
