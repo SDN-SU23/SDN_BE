@@ -121,6 +121,20 @@ class CommentController {
             })
         }
     }
+
+    updateCommentChildren = async (req, res) => {
+        try {
+            return res.status(200).json({
+                status: 200,
+                data: await CommentService.updateCommentChildren(req.params.commentParentId, req.body),
+            })
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: error.message,
+            })
+        }
+    }
 }
 
 module.exports = new CommentController()

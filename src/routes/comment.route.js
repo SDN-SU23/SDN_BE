@@ -8,5 +8,6 @@ router.post('/', commentController.createComment)
 router.post('/createCommentChildren/:commentParentId', commentController.createCommentChildren)
 router.delete('/:commentId', commentController.deleteComment)
 router.put('/:commentId', commentController.updateComment)
+router.put('/updateCommentChildren/:commentParentId', commentController.updateCommentChildren)
 
 module.exports = router

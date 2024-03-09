@@ -75,21 +75,27 @@ class CommentService {
 
     static deleteComment = async (commentId) => {
         try {
-            const result = await commentModel.findByIdAndDelete(commentId)
-            const findParent = await commentModel.find({
-                comment_children: { $in: [commentId] },
-            })
-            console.log(findParent)
-            if (findParent.length > 0) {
-                const updateParent = await commentModel.findOneAndUpdate(
-                    { _id: findParent[0]._id.toString() },
-                    { $pull: { comment_children: commentId } },
-                    { new: true }
-                )
-            }
+            const result = await commentModel.findByIdAndDelete(commentId);
             return result
         } catch (error) {
             global.logger.error('Service:: deleteComment', error)
+            throw error
+        }
+    }
+
+    static updateCommentChildren = async (commentParentId, comment) => {
+        try {
+            const result = await commentModel.findByIdAndUpdate({
+                _id: commentParentId
+            }, {
+                $set: {
+                    comment_children: comment
+                }
+            });
+            return result
+        }
+        catch (error) {
+            global.logger.error('Service:: updateCommentChildren', error)
             throw error
         }
     }
