@@ -5,10 +5,9 @@ const ReportService = require("../services/report.service");
 class ReportController {
   getAllReports = async (req, res) => {
     try {
-      const reports = await ReportService.getAllReports();
       res.status(200).json({
         status: 200,
-        data: reports,
+        data: await ReportService.getAllReports(req.query),
       });
     } catch (error) {
       console.error("Error retrieving reports:", error);

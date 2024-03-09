@@ -3,9 +3,15 @@
 const Report = require("../models/report.model");
 
 class ReportService {
-  static getAllReports = async () => {
+  static getAllReports = async (query) => {
     try {
-      return await Report.find();
+      const result = await Report.find().limit(query.pageSize).skip((query.currentPage - 1) * query.pageSize).lean();
+      return {
+        result,
+        currentPage: query.currentPage,
+        pageSize: query.pageSize,
+        totalPage: Math.ceil(result.length / query.pageSize)
+      }
     } catch (error) {
       throw new Error("Error retrieving reports: " + error.message);
     }
