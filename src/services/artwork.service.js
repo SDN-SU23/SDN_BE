@@ -7,7 +7,7 @@ const commentModel = require('../models/comment.model')
 class ArtworkService {
     static getListArtwork = async (query) => {
         try {
-            let { searchName, categoryName, currentPage, pageSize } = query
+            let { searchName, categoryName, currentPage, pageSize, userId } = query
             // init filter
             let filter = {}
             // check if category is an array
@@ -35,8 +35,20 @@ class ArtworkService {
                     artworkURL: item.imageURL,
                     authorAvatar: item.authorId.avatar,
                     authorName: item.authorId.name,
+                    isLike: false,
                 }
             })
+            // check like of user
+            if (userId) {
+                for (let i = 0; i < artwork.length; i++) {
+                    let react = await reactModel.findOne({ userId: userId, artworkId: artwork[i].artworkId })
+                    if (react) {
+                        artwork[i].isLike = true
+                    } else {
+                        artwork[i].isLike = false
+                    }
+                }
+            }
 
             return {
                 artwork,
@@ -51,7 +63,7 @@ class ArtworkService {
         }
     }
 
-    static getArtworkDetail = async (artworkId) => {
+    static getArtworkDetail = async (artworkId, userId) => {
         try {
             let result = await artworkModel.findById(artworkId).populate('authorId').lean();
             if (result) {
@@ -69,6 +81,7 @@ class ArtworkService {
                     status: result.status,
                     commentNumber: result.commentNumber,
                     reactNumber: result.reactNumber,
+                    isLike: false,
 
                 }
             }
@@ -84,7 +97,7 @@ class ArtworkService {
                 })
             }
 
-            console.log(reactList)
+
 
             // get comment of artwork
             let commentList = await commentModel.find({ artworkId: artworkId }).populate('authorId').lean();
@@ -98,6 +111,15 @@ class ArtworkService {
                         commentId: item._id,
                     }
                 })
+            }
+            // check like of user
+            if (userId) {
+                let react = await reactModel.findOne({ userId: userId, artworkId: artworkId })
+                if (react) {
+                    result.isLike = true
+                } else {
+                    result.isLike = false
+                }
             }
 
             return {

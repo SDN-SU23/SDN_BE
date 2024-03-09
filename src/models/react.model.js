@@ -8,11 +8,13 @@ const reactSchema = new Schema(
     {
         artworkId: {
             type: Schema.Types.ObjectId,
-            ref: 'Artwork'
+            ref: 'Artwork',
+            required: true
         },
         userId: {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            required: true
         }
     },
     {
