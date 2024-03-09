@@ -65,12 +65,12 @@ class ArtworkService {
                 })
             }
             // get comment of artwork
-            const commentList = await commentModel.find({ artworkId: artworkId }).populate('userId').lean();
+            const commentList = await commentModel.find({ artworkId: artworkId }).populate('authorId').lean();
 
             commentList.map((item) => {
                 return {
-                    authorAvatar: item.userId.avatarUrl,
-                    authorName: item.userId.name,
+                    authorAvatar: item.authorId.avatarUrl,
+                    authorName: item.authorId.name,
                 }
             })
 
