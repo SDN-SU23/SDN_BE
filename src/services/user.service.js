@@ -10,7 +10,7 @@ class UserService {
 
   static getListUser = async (query) => {
     try {
-      let { searchName, searchRole, curentPage, pageSize } = query;
+      let { searchName, searchRole, currentPage, pageSize } = query;
 
       let filter = {};
 
@@ -25,12 +25,12 @@ class UserService {
         filter.role = { $in: searchRole }
       }
 
-      const result = await userModel.find(filter).limit(pageSize).skip((curentPage - 1) * pageSize);
+      const result = await userModel.find(filter).limit(pageSize).skip((currentPage - 1) * pageSize);
 
       return {
         result,
         totalPage: Math.ceil(result.length / pageSize),
-        curentPage: curentPage,
+        currentPage: currentPage,
         pageSize: pageSize,
       };
     } catch (error) {

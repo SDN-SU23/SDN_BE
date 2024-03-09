@@ -7,7 +7,7 @@ const { getListInfo } = require('../utils')
 class ArtworkService {
     static getListArtwork = async (query) => {
         try {
-            let { searchName, categoryName, curentPage, pageSize } = query
+            let { searchName, categoryName, currentPage, pageSize } = query
             // init filter
             let filter = {}
             // check if category is an array
@@ -23,7 +23,7 @@ class ArtworkService {
             const result = await artworkModel
                 .find(filter)
                 .limit(pageSize)
-                .skip((curentPage - 1) * pageSize)
+                .skip((currentPage - 1) * pageSize)
                 .populate('authorId')
                 .lean();
             // get total page
@@ -40,7 +40,7 @@ class ArtworkService {
 
             return {
                 artwork,
-                currentPage: curentPage,
+                currentPage: currentPage,
                 totalPage: totalPage,
                 pageSize: pageSize
             };
