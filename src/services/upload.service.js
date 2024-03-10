@@ -1,7 +1,6 @@
 const cloudinary = require('../configs/cloudinary.config');
 const { getInfo } = require('../utils/index');
 const supabase = require('../configs/supabase.config');
-
 // upload image from url
 const uploadImageFromURL = async (uriImage, imageName, userId) => {
 
@@ -52,26 +51,12 @@ const getImageFromUrl = async (url) => {
     }
 }
 
-const createSignedUrl = async (authorId, title) => {
+const createSignedUrlDetail = async (imageFolder) => {
     try {
         const { data, error } = await supabase
             .storage
             .from('SDN')
-            .createSignedUrl(`${authorId}/${title}`, 20, { transform: { width: 100, height: 100 } });
-        console.log(data);
-        return data;
-    } catch (error) {
-        throw error;
-    }
-}
-
-const uploadImageSupabase = async (file) => {
-    try {
-        const { data, error } = await supabase
-            .storage
-            .from('SDN')
-            .uploadToSignedUrl('file', file);
-        console.log(data);
+            .createSignedUrl(`${imageFolder} `, 60)
         return data;
     } catch (error) {
         throw error;
@@ -80,5 +65,6 @@ const uploadImageSupabase = async (file) => {
 
 module.exports = {
     uploadImageFromURL,
-    uploadImageFromLocal
+    uploadImageFromLocal,
+    createSignedUrlDetail
 }

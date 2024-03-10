@@ -87,7 +87,7 @@ class ArtworkController {
         try {
             const artworkId = req.params.artworkId
 
-            const result = await ArtworkService.updateArtwork(artworkId, req.body)
+            const result = await ArtworkService.updateArtwork(artworkId, req.body.status)
 
             if (!result) {
                 return res.status(404).json({

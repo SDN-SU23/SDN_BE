@@ -50,13 +50,8 @@ class AuthenService {
             const hashPass = await bcrypy.hash(data.password, 10);
             // create user
             const result = await userModel.create({
-                email: data.email,
-                password: hashPass,
-                name: data.name,
-                age: data.age,
-                avatarUrl: data.avatarUrl,
-                gender: data.gender,
-                yob: data.yob
+                ...data,
+                password: hashPass
             });
             return result;
         }

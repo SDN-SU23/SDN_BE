@@ -3,6 +3,7 @@
 const artworkModel = require('../models/artwork.model')
 const reactModel = require('../models/react.model')
 const commentModel = require('../models/comment.model')
+const { createSignedUrlDetail } = require('../services/upload.service');
 
 class ArtworkService {
     static getListArtwork = async (query) => {
@@ -26,7 +27,6 @@ class ArtworkService {
                 .skip((currentPage - 1) * pageSize)
                 .populate('authorId')
                 .lean();
-            // add filter status active
             // get total page
             const totalPage = Math.ceil(await artworkModel.countDocuments(filter) / pageSize)
             // return filter data and total page
@@ -38,7 +38,11 @@ class ArtworkService {
                     authorName: item.authorId.name,
                     isLike: false,
                 }
-            })
+            });
+            // get signed url of artwork
+            // for (let i = 0; i < artwork.length; i++) {
+            //     artwork[i].artworkURL = await createSignedUrlDetail(artwork[i].artworkURL)
+            // }
             // check like of user
             if (userId) {
                 for (let i = 0; i < artwork.length; i++) {
@@ -83,7 +87,7 @@ class ArtworkService {
                     commentNumber: result.commentNumber,
                     reactNumber: result.reactNumber,
                     isLike: false,
-
+                    // imageURL: await createSignedUrlDetail(result.imageURL)
                 }
             }
             // get react of artwork
@@ -94,12 +98,10 @@ class ArtworkService {
                     return {
                         authorAvatar: item.userId.avatarUrl,
                         authorName: item.userId.name,
+                        authorId: item.userId._id
                     }
                 })
             }
-
-
-
             // get comment of artwork
             let commentList = await commentModel.find({ artworkId: artworkId }).populate('authorId').lean();
 
