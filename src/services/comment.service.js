@@ -1,7 +1,9 @@
 'use strict'
 
 const { getListInfo, getInfo } = require('../utils')
-const commentModel = require('../models/comment.model')
+const commentModel = require('../models/comment.model');
+const artworkModel = require('../models/artwork.model');
+const notifcationModel = require('../models/notification.model')
 
 class CommentService {
     static getListCommentByArtworkId = async (artworkId) => {
@@ -25,7 +27,18 @@ class CommentService {
     }
     static createComment = async (comment) => {
         try {
-            const result = await commentModel.create(comment)
+            const result = await commentModel.create(comment);
+            // // send notification to author of comment
+
+            // const artwork = await artworkModel.findOne({
+            //     _id: comment.artworkId
+            // });
+
+            // const sendNotification = await notifcationModel.create({
+            //     userId: artwork.authorId,
+            //     content: `New comment in your ${artwork.title}`
+            // });
+
             return result
         } catch (error) {
             global.logger.error('Service:: createComment', error)
@@ -43,7 +56,17 @@ class CommentService {
                 throw new Error('Comment not found')
             }
 
-            return result
+            // // send notification to author of comment
+            // const artwork = await artworkModel.findOne({
+            //     _id: result.artworkId
+            // })
+
+            // const sendNotification = await notifcationModel.create({
+            //     userId: artwork.authorId,
+            //     content: `Comment in your ${artwork.title} has been updated`
+            // })
+
+            return result;
         } catch (error) {
             global.logger.error('Service:: updateComment', error)
             throw error
@@ -64,6 +87,11 @@ class CommentService {
                     comment_children: comment
                 }
             });
+            // send notification to author of comment
+            // const notification = await notifcationModel.create({
+            //     userId: comment.authorId,
+            //     content: `Someone reply your comment in ${comment.artworkId}`
+            // });
             return result
 
         } catch (error) {

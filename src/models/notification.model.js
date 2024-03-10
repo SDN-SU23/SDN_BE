@@ -5,13 +5,18 @@ const COLLECTION_NAME = "Notifications";
 
 const notificationSchema = new mongoose.Schema(
   {
-    content: {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    message: {
       type: String,
       required: true,
     },
-    imageURLs: {
-      type: [String],
-      default: [],
+    isRead: {
+      type: Boolean,
+      default: false,
     },
   },
   {

@@ -7,16 +7,16 @@ class NotificationController {
     try {
       return res.status(200).json({
         status: 200,
-        data: await NotificationService.getAllNotifications(),
+        data: await NotificationService.getAllNotifications(req.params.userId),
       });
     } catch (error) {
       console.error("Error retrieving notifications:", error);
     }
   };
 
-  createNotification = async (req, res) => {
+  createNotificationToUser = async (req, res) => {
     try {
-      const data = await NotificationService.createNotification(req.body);
+      const data = await NotificationService.createNotificationToUser(req.body);
       return res.status(200).json({
         status: 200,
         data: data,
@@ -55,29 +55,15 @@ class NotificationController {
     }
   };
 
-  updateNotification = async (req, res) => {
-    const { id } = req.params;
-    const newData = req.body;
-
+  createNotificationToAllUser = async (req, res) => {
     try {
-      const updatedNotification = await NotificationService.updateNotification(
-        id,
-        newData
-      );
-
-      if (!updatedNotification) {
-        return res.status(404).json({
-          status: 404,
-          message: "Notification not found",
+      return res
+        .status(200)
+        .json({
+          status: 200,
+          data: await NotificationService.createNotificationToAllUser(req.body),
         });
-      }
-
-      return res.status(200).json({
-        status: 200,
-        data: updatedNotification,
-      });
     } catch (error) {
-      console.error("Error updating notification:", error);
       return res.status(500).json({
         status: 500,
         message: error.message,
@@ -85,33 +71,6 @@ class NotificationController {
     }
   };
 
-  deleteNotification = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-      const deletedNotification = await NotificationService.deleteNotification(
-        id
-      );
-
-      if (!deletedNotification) {
-        return res.status(404).json({
-          status: 404,
-          message: "Notification not found",
-        });
-      }
-
-      return res.status(200).json({
-        status: 200,
-        data: deletedNotification,
-      });
-    } catch (error) {
-      console.error("Error deleting notification:", error);
-      return res.status(500).json({
-        status: 500,
-        message: error.message,
-      });
-    }
-  };
 }
 
 module.exports = new NotificationController();

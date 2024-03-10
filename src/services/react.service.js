@@ -1,12 +1,25 @@
 'use strict'
 
 const reactModel = require("../models/react.model");
+const notifcationModel = require("../models/notification.model");
+const artworkModel = require("../models/artwork.model");
 
 class ReactService {
     static createNewReact = async (data) => {
         try {
             // create a new react
             const result = await reactModel.create(data);
+
+            // get detail artwork
+            const artwork = await artworkModel.findOne({
+                _id: data.artworkId
+            });
+            // // send notification to author of artwork
+            // const sendNotification = await notifcationModel.create({
+            //     userId: artwork.authorId,
+            //     content: `New react in your artwork`
+            // });
+
             return result;
         } catch (error) {
             // do something

@@ -26,6 +26,7 @@ class ArtworkService {
                 .skip((currentPage - 1) * pageSize)
                 .populate('authorId')
                 .lean();
+            // add filter status active
             // get total page
             const totalPage = Math.ceil(await artworkModel.countDocuments(filter) / pageSize)
             // return filter data and total page
@@ -138,7 +139,7 @@ class ArtworkService {
             const result = await artworkModel.create({
                 ...data,
                 authorId: user._id,
-            })
+            });
             return result;
         } catch (error) {
             global.logger.error('Service:: createArtwork', error)

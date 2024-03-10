@@ -4,14 +4,15 @@ const notificationController = require("../controllers/notification.controller")
 
 const router = express.Router();
 
-router.get("/", notificationController.getAllNotifications);
-
-router.post("/", notificationController.createNotification);
-
 router.get("/:id", notificationController.getNotificationByID);
 
-router.put("/:id", notificationController.updateNotification);
+router.get("/getNotificationByUserId/:userId", notificationController.getAllNotifications);
 
-router.delete("/:id", notificationController.deleteNotification);
+// can't post system auto generate
+router.post("/createNotificationToUser", notificationController.createNotificationToUser);
+
+router.post("/createNotificationToAllUser", notificationController.createNotificationToAllUser);
+
+
 
 module.exports = router;

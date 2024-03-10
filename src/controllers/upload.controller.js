@@ -29,7 +29,7 @@ class UploadController {
                     metadata: await uploadImageFromLocal({
                         path: file.path,
                         imageName: file.filename,
-                        // userId: user._id
+                        userId: user._id
                     })
                 })
         } catch (error) {

@@ -1,11 +1,14 @@
 "use strict";
 
 const notificationModel = require("../models/notification.model");
+const userModel = require("../models/user.model");
 
 class NotificationService {
-  static getAllNotifications = async () => {
+  static getAllNotifications = async (userId) => {
     try {
-      const result = await notificationModel.find();
+      const result = await notificationModel.find(
+        { userId: userId }
+      );
       return result;
     } catch (error) {
       global.logger.error("Service:: getListNotification", error);
@@ -13,7 +16,7 @@ class NotificationService {
     }
   };
 
-  static createNotification = async (data) => {
+  static createNotificationToUser = async (data) => {
     try {
       const result = await notificationModel.create(data);
       return result;
@@ -32,20 +35,22 @@ class NotificationService {
     }
   };
 
-  static updateNotification = async (id, newData) => {
+  static createNotificationToAllUser = async (data) => {
     try {
-      const result = await notificationModel.findByIdAndUpdate(id, newData, {
-        new: true,
+      // role audience hoặc creator
+      const listUser = await userModel.find({
+        role: { $in: ["audience", "creator"] },
       });
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  };
 
-  static deleteNotification = async (id) => {
-    try {
-      const result = await notificationModel.findByIdAndDelete(id);
+      for (const user of listUser) {
+        const item = {
+          ...data,
+          userId: user._id,
+        };
+        await notificationModel.create(item);
+      }
+
+      return "Create notification success";
       return result;
     } catch (error) {
       throw error;
