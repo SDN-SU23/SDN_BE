@@ -158,7 +158,12 @@ class ArtworkService {
 
     static updateArtwork = async (artworkId, data) => {
         try {
-            const result = await artworkModel.findByIdAndUpdate(artworkId, data, { new: true })
+            const result = await artworkModel
+                .findByIdAndUpdate(
+                    artworkId,
+                    data,
+                    { new: true }
+                )
             return result
         }
         catch (error) {
