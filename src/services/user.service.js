@@ -25,11 +25,13 @@ class UserService {
         filter.role = { $in: searchRole }
       }
 
-      const result = await userModel.find(filter).limit(pageSize).skip((currentPage - 1) * pageSize);
+      const result = await userModel.find(filter).limit(pageSize).skip((currentPage - 1) * pageSize).lean();
+
+      const totalPage = Math.ceil(await userModel.countDocuments(filter) / pageSize);
 
       return {
         result,
-        totalPage: Math.ceil(result.length / pageSize),
+        totalPage: totalPage,
         currentPage: currentPage,
         pageSize: pageSize,
       };

@@ -10,7 +10,7 @@ class ReportService {
         result,
         currentPage: query.currentPage,
         pageSize: query.pageSize,
-        totalPage: Math.ceil(result.length / query.pageSize)
+        totalPage: Math.ceil(await Report.countDocuments() / query.pageSize)
       }
     } catch (error) {
       throw new Error("Error retrieving reports: " + error.message);

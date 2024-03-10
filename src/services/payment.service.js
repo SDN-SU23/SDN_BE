@@ -1,5 +1,7 @@
 'use strict'
 
+const querystring = require("qs");
+
 class PaymentService {
     static createPaymentUrl = async (query) => {
         try {
@@ -30,8 +32,8 @@ class PaymentService {
                 vnp_TxnRef: orderId,
                 vnp_OrderInfo: "Payment for transaction code: " + orderId,
                 vnp_OrderType: orderType,
-                vnp_Amount: amount * 100,
-                vnp_ReturnUrl: `${returnUrl}/${accountId}/${amount}/${type}`,
+                vnp_Amount: query.amount * 100,
+                vnp_ReturnUrl: `${returnUrl}/${query.accountId}/${query.amount}/${query.type}`,
                 vnp_IpAddr: ipAddr,
                 vnp_CreateDate: newCreateDate,
             };
@@ -45,6 +47,22 @@ class PaymentService {
         } catch (error) {
             throw error;
         }
+    }
+
+    static sortObject = (obj) => {
+        let sorted = {};
+        let str = [];
+        let key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                str.push(encodeURIComponent(key));
+            }
+        }
+        str.sort();
+        for (key = 0; key < str.length; key++) {
+            sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
+        }
+        return sorted;
     }
 }
 

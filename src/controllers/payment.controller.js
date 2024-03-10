@@ -13,7 +13,9 @@ class PaymentController {
                     data: await PaymentService.createPaymentUrl(req.query),
                 });
         } catch (error) {
-            res.status(500).send(error);
+            res
+                .status(500)
+                .send(error);
         }
     }
 }

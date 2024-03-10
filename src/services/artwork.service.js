@@ -27,7 +27,7 @@ class ArtworkService {
                 .populate('authorId')
                 .lean();
             // get total page
-            const totalPage = Math.ceil(result.length / pageSize)
+            const totalPage = Math.ceil(await artworkModel.countDocuments(filter) / pageSize)
             // return filter data and total page
             const artwork = result.map((item) => {
                 return {
@@ -199,7 +199,7 @@ class ArtworkService {
                 .populate('authorId')
                 .lean();
             // get total page
-            const totalPage = Math.ceil(result.length / pageSize)
+            const totalPage = Math.ceil(await artworkModel.countDocuments(filter) / pageSize)
 
             return {
                 result,
