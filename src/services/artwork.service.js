@@ -37,6 +37,7 @@ class ArtworkService {
                     authorAvatar: item.authorId.avatarUrl,
                     authorName: item.authorId.name,
                     isLike: false,
+                    status: item.status,
                 }
             });
             // get signed url of artwork
@@ -88,6 +89,7 @@ class ArtworkService {
                     reactNumber: result.reactNumber,
                     isLike: false,
                     // imageURL: await createSignedUrlDetail(result.imageURL)
+                    status: result.status
                 }
             }
             // get react of artwork
