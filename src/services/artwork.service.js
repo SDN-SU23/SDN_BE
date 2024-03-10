@@ -136,9 +136,7 @@ class ArtworkService {
 
     static createArtwork = async (data) => {
         try {
-            const result = await artworkModel.create({
-                data
-            });
+            const result = await artworkModel.create(data);
             return result;
         } catch (error) {
             global.logger.error('Service:: createArtwork', error)
