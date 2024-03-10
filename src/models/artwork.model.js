@@ -14,6 +14,7 @@ const artworkSchema = new Schema(
     description: {
       type: String,
       trim: true,
+      required: true,
     },
     imageURL: {
       type: String,
@@ -23,6 +24,7 @@ const artworkSchema = new Schema(
     authorId: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      require: true,
     },
     commentNumber: {
       type: Number,
