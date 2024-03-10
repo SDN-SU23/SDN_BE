@@ -34,7 +34,7 @@ class ArtworkService {
                 return {
                     artworkId: item._id,
                     artworkURL: item.imageURL,
-                    authorAvatar: item.authorId.avatar,
+                    authorAvatar: item.authorId.avatarUrl,
                     authorName: item.authorId.name,
                     isLike: false,
                 }
