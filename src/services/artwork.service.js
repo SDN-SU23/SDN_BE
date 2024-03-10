@@ -38,6 +38,7 @@ class ArtworkService {
                     authorName: item.authorId.name,
                     isLike: false,
                     status: item.status,
+                    price: item.price,
                 }
             });
             // get signed url of artwork
