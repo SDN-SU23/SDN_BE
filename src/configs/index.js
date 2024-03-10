@@ -22,10 +22,11 @@ const dev = {
         callbackURL: process.env.OAUTH_CB
     },
     payment: {
-        vnp_TmnCode: process.env.VNP_TMNCODE,
-        vnp_HashSecret: process.env.VNP_HASHSECRET,
-        vnp_Url: process.env.VNP_URL,
-        vnp_ReturnUrl: process.env.VNP_RETURNURL
+        vnp_TmnCode: process.env.vnp_TmnCode,
+        vnp_HashSecret: process.env.vnp_HashSecret,
+        vnp_Url: process.env.vnp_Url,
+        vnp_ReturnUrl: process.env.vnp_ReturnUrl,
+        vnp_ReturnUrlUpgrade: process.env.vnp_ReturnUrlUpgrade
     },
     supabase: {
         url: process.env.SUPABASE_URL,

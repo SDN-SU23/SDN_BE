@@ -54,6 +54,8 @@ app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => 
     })
 });
 
-// require('./configs/supbase.config');
+// require('./configs/supabase.config');
+
+
 
 module.exports = app;

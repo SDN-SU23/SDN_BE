@@ -17,9 +17,24 @@ const convertToNormalDate = (date) => {
     return moment(date).format('YYYY-MM-DD')
 }
 
+const payGetDate = () => {
+    return moment().format('YYYYMMDD')
+}
+
+const payGetTime = (date) => {
+    return moment(date).format('HHmmss')
+}
+
+const payGetNow = (date) => {
+    return moment(date).format('yyyymmddHHmmss')
+}
+
 module.exports = {
     getNow,
     getNowDate,
     getNowTime,
-    convertToNormalDate
+    convertToNormalDate,
+    payGetTime,
+    payGetDate,
+    payGetNow
 }
