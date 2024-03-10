@@ -19,7 +19,9 @@ const dev = {
     oauth: {
         clientID: process.env.OAUTH_CLIENT_ID,
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        callbackURL: process.env.OAUTH_CB
+        callbackURL: process.env.OAUTH_CB,
+        mailCallBackURL: process.env.OAUTH_MAIL_CB,
+        mailRefreshToken: process.env.OAUTH_MAIL_REFRESH_TOKEN,
     },
     payment: {
         vnp_TmnCode: process.env.vnp_TmnCode,

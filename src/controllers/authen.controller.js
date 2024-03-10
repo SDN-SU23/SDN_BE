@@ -28,6 +28,19 @@ class AuthenController {
                 })
         }
     }
+
+    forgotPassword = async () => {
+        try {
+            return res
+                .status(200)
+                .json({
+                    message: await authenService.forgotPassword(req.body)
+                })
+        } catch (error) {
+
+        }
+    }
+
 }
 
 module.exports = new AuthenController();
