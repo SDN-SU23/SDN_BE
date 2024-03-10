@@ -134,11 +134,10 @@ class ArtworkService {
         }
     }
 
-    static createArtwork = async (data, user) => {
+    static createArtwork = async (data) => {
         try {
             const result = await artworkModel.create({
-                ...data,
-                authorId: user._id,
+                data
             });
             return result;
         } catch (error) {

@@ -48,7 +48,7 @@ class ArtworkController {
                 .status(201)
                 .json({
                     status: 201,
-                    data: await ArtworkService.createArtwork(req.body, req.user)
+                    data: await ArtworkService.createArtwork(req.body)
                 })
         } catch (error) {
             return res.status(500).json({
