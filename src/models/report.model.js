@@ -5,8 +5,7 @@ const COLLECTION_NAME = "Reports";
 
 // Định nghĩa enum cho trường type, content, status
 const reportType = ["spam", "abuse", "inappropriate"]; // Ví dụ
-const reportContent = ["offensive language", "inappropriate content", "copyright violation"]; // Ví dụ
-const reportStatus = ["pending", "resolved"]; // Ví dụ
+const reportStatus = ["pending", "resolved", 'reject']; // Ví dụ
 
 const reportSchema = new Schema(
   {
@@ -17,13 +16,13 @@ const reportSchema = new Schema(
     },
     content: {
       type: String,
-      enum: reportContent,
+      trim: true,
       required: true,
     },
     status: {
       type: String,
       enum: reportStatus,
-      required: true,
+      default: "pending",
     },
     authorId: {
       type: String,
