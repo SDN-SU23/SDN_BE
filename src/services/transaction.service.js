@@ -22,7 +22,8 @@ class TransactionService {
             const response = await transactionModel
                 .find({ senderId: userId })
                 .limit(query.pageSize)
-                .skip((query.currentPage - 1) * query.pageSize);
+                .skip((query.currentPage - 1) * query.pageSize)
+                .populate('senderId', 'name')
             // count total page
             const totalPage = Math.ceil(await transactionModel.countDocuments({ senderId: userId }) / query.pageSize);
             return {
