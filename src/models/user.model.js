@@ -40,7 +40,7 @@ var userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ['Audience', 'Admin', 'Creator'],
+      enum: ['Audience', 'Admin', 'Creator', 'Moderator'],
       default: 'Audience'
     },
   },
