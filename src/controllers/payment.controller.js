@@ -6,6 +6,7 @@ const moment = require('moment');
 const transactiomModel = require('../models/transaction.model');
 const notificationModel = require('../models/notification.model');
 const artworkModel = require('../models/artwork.model');
+const userModel = require('../models/user.model');
 
 class PaymentController {
     createPaymentUrlPayArtWork = async (req, res) => {
@@ -164,6 +165,8 @@ class PaymentController {
                 amount: 30000,
                 status: "completed"
             })
+            // update account
+            const updateAccount = await userModel.findByIdAndUpdate(accountId, { role: 'Creator' });
             // create notificate to receiver
             const notification = await notificationModel.create({
                 message: "Bạn đã thanh toán 30000 để đăng ký tác giả",
