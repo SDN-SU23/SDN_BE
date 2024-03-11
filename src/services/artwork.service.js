@@ -18,7 +18,7 @@ class ArtworkService {
             }
             // check searchName 
             if (searchName) {
-                filter.name = { $regex: searchName, $options: 'i' };
+                filter.title = { $regex: searchName, $options: 'i' };
             }
             // return list of artwork
             const result = await artworkModel
