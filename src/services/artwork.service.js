@@ -11,6 +11,7 @@ class ArtworkService {
             let { searchName, categoryName, currentPage, pageSize, userId } = query
             // init filter
             let filter = {}
+            filter.status = 'active'
             // check if category is an array
             if (categoryName) {
                 categoryName = category.split(',')

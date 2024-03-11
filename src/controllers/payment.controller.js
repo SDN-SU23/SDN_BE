@@ -7,6 +7,7 @@ const transactiomModel = require('../models/transaction.model');
 const notificationModel = require('../models/notification.model');
 const artworkModel = require('../models/artwork.model');
 const userModel = require('../models/user.model');
+const collectionModel = require('../models/collection.model');
 
 class PaymentController {
     createPaymentUrlPayArtWork = async (req, res) => {
@@ -64,7 +65,7 @@ class PaymentController {
             const { accountId, amount, artworkId } = req.params;
             // create transactiom
             const getDetailReceiver = await artworkModel.findById(artworkId);
-            const transactiom = await transactiomModel.create({
+            await transactiomModel.create({
                 type: "payArtWork",
                 content: "Thanh toan cho tac pham",
                 senderId: accountId,
@@ -73,10 +74,16 @@ class PaymentController {
                 status: "completed"
             })
             // create notificate to receiver
-            const notification = await notificationModel.create({
+            await notificationModel.create({
                 message: "Bạn đã nhận được " + amount + " từ người mua",
                 userId: getDetailReceiver.authorId,
             })
+            // create collection
+            await collectionModel.create({
+                imageId: artworkId,
+                authorId: accountId
+            })
+
             res.status(200).json({
                 message: "Thanh toán thành công"
             })
