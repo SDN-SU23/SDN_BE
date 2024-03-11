@@ -2,67 +2,35 @@
 
 const collectionModel = require("../models/collection.model");
 const { getListInfo } = require("../utils");
+const { createSignedUrlDetail } = require('../services/upload.service')
 
 class CollectionService {
   static getListCollection = async () => {
     try {
       const result = await collectionModel.find({});
-      return getListInfo({
-        // field: ["name", "email"],
-        object: result,
-      });
+      return result;
     } catch (error) {
       global.logger.error("Service:: getListCollection", error);
       throw error;
     }
   };
 
-  static createCollection = async (data) => {
+  static getListCollectionByUserId = async (userId) => {
     try {
-      const result = await collectionModel.create(data);
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  };
-  static updateCollection = async (collectId, newData) => {
-    try {
-      const result = await collectionModel.findByIdAndUpdate(
-        collectId,
-        { $set: newData },
-        { new: true }
-      );
+      let result = await collectionModel.find({ authorId: userId }).populate("imageId").lean();
 
-      if (!result) {
-        throw new Error("Collection not found");
+      for (let i = 0; i < result.length; i++) {
+        result[i].imageURL = await createSignedUrlDetail(result[i].imageId.imageURL)
       }
 
-      return result;
-    } catch (error) {
-      global.logger.error("Service:: updateCollection", error);
-      throw error;
-    }
-  };
-  static deleteCollection = async (collectionId) => {
-    try {
-      const result = await collectionModel.findByIdAndDelete(collectionId);
-      return result;
-    } catch (error) {
-      global.logger.error("Service:: deleteCollection", error);
-      throw error;
-    }
-  };
-  static getCollectionDetailsById = async (collectionId) => {
-    try {
-      const collectionDetails = await collectionModel.findById(collectionId);
+      result = getListInfo({
+        field: ["imageURL", "imageId.title", "imageId._id"],
+        object: result,
+      })
 
-      if (!collectionDetails) {
-        throw new Error("Collection not found");
-      }
-
-      return collectionDetails;
+      return result
     } catch (error) {
-      global.logger.error("Service:: getCollectionDetailsById", error);
+      global.logger.error("Service:: getListCollectionByUserId", error);
       throw error;
     }
   };

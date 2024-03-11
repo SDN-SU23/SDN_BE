@@ -5,22 +5,15 @@ const COLLECTION_NAME = "Collections";
 
 var collectionSchema = new Schema(
   {
-    name: {
-      type: String,
-      trim: true,
-      required: true,
-    },
     imageId: {
-      type: String,
-      trim: true,
+      type: Schema.Types.ObjectId,
+      ref: "Artwork",
       require: true,
-      unique: true,
     },
     authorId: {
-      type: String,
-      trim: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       require: true,
-      unique: true,
     },
   },
   {
