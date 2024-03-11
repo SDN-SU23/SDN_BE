@@ -21,9 +21,9 @@ class PaymentService {
             var orderType = "sales";
             var locale = "vn";
             var currCode = "VND";
-            if (!accountId) {
-                throw new Error("accountId is required");
-            }
+            // if (!accountId) {
+            //     throw new Error("accountId is required");
+            // }
             var newDate = new Date();
             newDate.setDate(newDate.getDate() + 1);
             var newCreateDate = moment(newDate).format("yyyymmddHHmmss");
@@ -31,14 +31,13 @@ class PaymentService {
                 vnp_Version: "2.1.0",
                 vnp_Command: "pay",
                 vnp_TmnCode: tmnCode,
-                vnp_BankCode: "NCB",
                 vnp_Locale: locale,
                 vnp_CurrCode: currCode,
                 vnp_TxnRef: orderId,
-                vnp_OrderInfo: "Payment for transaction code: " + orderId,
+                vnp_OrderInfo: orderId,
                 vnp_OrderType: orderType,
-                vnp_Amount: amount * 100,
-                vnp_ReturnUrl: `${returnUrl}/${accountId}/${amount}/${type}`,
+                vnp_Amount: 100,
+                vnp_ReturnUrl: returnUrl,
                 vnp_IpAddr: ipAddr,
                 vnp_CreateDate: newCreateDate,
             };

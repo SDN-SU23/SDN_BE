@@ -4,5 +4,6 @@ const transactionController = require('../controllers/transaction.controller');
 
 router.get('/:userId', transactionController.getListTransactionByUserId);
 router.post('/withdraw', transactionController.withDraw);
+router.put('/:transactionId', transactionController.updateTransaction);
 
 module.exports = router

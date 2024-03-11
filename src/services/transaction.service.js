@@ -35,6 +35,15 @@ class TransactionService {
             throw new Error(error.message);
         }
     }
+
+    static updateTransaction = async (transactionId, detail) => {
+        try {
+            const response = await transactionModel.findByIdAndUpdate(transactionId, detail, { new: true });
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
 
 module.exports = TransactionService;
