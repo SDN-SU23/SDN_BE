@@ -1,7 +1,10 @@
 const express = require("express");
 const userController = require("../controllers/user.controller");
 const router = express.Router();
+const { checkIsLogin, checkRole } = require('../auth/index');
 
+
+router.use(checkIsLogin);
 router.get("/", userController.getListUser);
 router.post("/", userController.createUser);
 router.get('/:userId', userController.getUserById)

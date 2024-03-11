@@ -158,7 +158,7 @@ class PaymentController {
         try {
             const { accountId } = req.params;
             // create transactiom
-            const transactiom = await transactiomModel.create({
+            await transactiomModel.create({
                 type: "registerCreator",
                 content: "Thanh toan dang ky tac gia",
                 senderId: accountId,
@@ -166,9 +166,9 @@ class PaymentController {
                 status: "completed"
             })
             // update account
-            const updateAccount = await userModel.findByIdAndUpdate(accountId, { role: 'Creator' });
+            await userModel.findByIdAndUpdate(accountId, { role: 'Creator' });
             // create notificate to receiver
-            const notification = await notificationModel.create({
+            await notificationModel.create({
                 message: "Bạn đã thanh toán 30000 để đăng ký tác giả",
                 userId: accountId,
             })
