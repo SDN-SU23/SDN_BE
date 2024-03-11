@@ -45,6 +45,27 @@ class TransactionService {
             throw new Error(error.message);
         }
     }
+
+    static getListTransaction = async (query) => {
+        try {
+            const response = await transactionModel
+                .find()
+                .limit(query.pageSize)
+                .skip((query.currentPage - 1) * query.pageSize)
+                .populate('senderId', 'name')
+                .populate('receiverId', 'name')
+            // count total page
+            const totalPage = Math.ceil(await transactionModel.countDocuments() / query.pageSize);
+            return {
+                response,
+                totalPage,
+                pageSize: query.pageSize,
+                currentPage: query.currentPage,
+            };
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
 
 module.exports = TransactionService;
