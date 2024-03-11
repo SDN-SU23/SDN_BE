@@ -5,8 +5,9 @@ const COLLECTION_NAME = 'KeyTokens';
 
 var keyTokenSchema = new Schema({
     email: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
+        required: true,
+        unique: true
     },
     publicKey: {
         type: String,

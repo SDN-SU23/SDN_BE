@@ -1,6 +1,6 @@
 'use strict'
 const bcrypy = require('bcrypt');
-const cryto = require('node:crypto');
+const crypto = require('node:crypto');
 const userModel = require('../models/user.model');
 const { createTokenPair } = require('../helpers/jwt.helper');
 const { sendMail } = require('../configs/mail.config');
@@ -27,13 +27,14 @@ class AuthenService {
                 }
             });
             // create token pair 
-            const tokenPair = await createTokenPair({ email, publicKey, privateKey });
+            const tokenPair = await createTokenPair({ email: email }, publicKey, privateKey);
 
             return {
                 accessToken: tokenPair.accessToken,
                 refreshToken: tokenPair.refreshToken,
                 userMail: email,
                 userId: user._id,
+                role: user.role
             };
 
         } catch (error) {

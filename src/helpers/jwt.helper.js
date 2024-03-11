@@ -4,17 +4,22 @@ const keyTokenModel = require('../models/keyToken.model');
 const createTokenPair = async (payload, publicKey, privateKey) => {
     try {
         const accessToken = jwt.sign(payload, privateKey, {
-            expiresIn: '1h'
+            'algorithm': 'RS256',
+            expiresIn: '2 days'
         });
 
         const refreshToken = jwt.sign(payload, privateKey, {
-            expiresIn: '7d'
+            'algorithm': 'RS256',
+            expiresIn: '7 days'
         });
         // verify token
-        const decodeToken = jwt.verify(accessToken, publicKey, {});
-        if (!decodeToken) {
-            throw new Error('Token is invalid');
-        }
+        jwt.verify(accessToken, publicKey, (err, decode) => {
+            if (err) {
+                console.error('Verify error::', err)
+            } else {
+                console.log('decode::', decode)
+            }
+        })
         // save public key
         await keyTokenModel.findOneAndUpdate({
             email: payload.email
@@ -31,6 +36,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
         // 
 
     } catch (error) {
+        global.logger.error('Helper:: createTokenPair', error);
         throw error;
     }
 }
