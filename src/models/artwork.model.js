@@ -44,7 +44,7 @@ const artworkSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["inActive", "active", "pending"],
+      enum: ["public", "private", "pending"],
       default: "pending",
     },
   },
