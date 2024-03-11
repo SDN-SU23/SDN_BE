@@ -36,9 +36,9 @@ class TransactionService {
         }
     }
 
-    static updateTransaction = async (transactionId, detail) => {
+    static updateTransaction = async (transactionId, status) => {
         try {
-            const response = await transactionModel.findByIdAndUpdate(transactionId, detail, { new: true });
+            const response = await transactionModel.findByIdAndUpdate(transactionId, { status: status });
             return response;
         } catch (error) {
             throw new Error(error.message);

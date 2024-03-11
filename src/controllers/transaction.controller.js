@@ -23,7 +23,7 @@ class TransactionController {
 
     updateTransaction = async (req, res) => {
         try {
-            const response = await TransactionService.updateTransaction(req.params.transactionId, req.body);
+            const response = await TransactionService.updateTransaction(req.params.transactionId, req.body.status);
             return res.status(200).json(response);
         } catch (error) {
             return res.status(400).json({ message: error.message });
