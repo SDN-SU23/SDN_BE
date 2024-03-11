@@ -2,10 +2,15 @@ const express = require('express');
 const router = express.Router();
 const paymentController = require("../controllers/payment.controller");
 
-router.get("/create_payment_url", paymentController.createPaymentUrl);
-// router.get("/create_payment_url_upgrade", paymentController.createPaymentUrlUpgrade);
-router.get("/return_Url/:accountId", paymentController.vnPayReturn);
-// router.get("/return_Url_upgrade", paymentController.vnPayReturnUpgrade);
+
+router.get("/returnPayArtWork/:accountId/:amount/:artworkId", paymentController.vnPayReturnPayArtWork);
+
+router.get("/createPaymentUrlPayArtWork/:accountId/:amount/:artworkId", paymentController.createPaymentUrlPayArtWork);
+
+router.get("/returnRegisterCreator", paymentController.vnPayReturnRegisterCreator);
+
+router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
+
 
 module.exports = router;
 
