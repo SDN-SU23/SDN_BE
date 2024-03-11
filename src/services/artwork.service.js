@@ -82,6 +82,7 @@ class ArtworkService {
                     description: result.description,
                     authorName: result.authorId.name,
                     authorAvatar: result.authorId.avatarUrl,
+                    authorId: result.authorId._id,
                     category: result.category,
                     status: result.status,
                     createdAt: result.createdAt,
