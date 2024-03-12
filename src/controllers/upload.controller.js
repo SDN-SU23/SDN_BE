@@ -17,8 +17,7 @@ class UploadController {
 
     uploadImageFromLocal = async (req, res) => {
         try {
-            const { file, user } = req;
-            console.log(`file`, file)
+            const { file } = req;
             if (!file) {
                 throw new Error('file is not exist')
             }
@@ -29,7 +28,6 @@ class UploadController {
                     metadata: await uploadImageFromLocal({
                         path: file.path,
                         imageName: file.filename,
-                        userId: user._id
                     })
                 })
         } catch (error) {

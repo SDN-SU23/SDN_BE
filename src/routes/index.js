@@ -15,5 +15,6 @@ fs.readdirSync(__dirname).forEach((file) => {
 });
 
 // router.use('/payment', require('./payment.route'));
+router.use('/upload', require('./upload.route'));
 
 module.exports = router;

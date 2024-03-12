@@ -5,6 +5,7 @@ const { getListInfo } = require("../utils");
 const followModel = require('../models/follow.model');
 const artworkModel = require('../models/artwork.model');
 const bcrypt = require('bcrypt');
+const { createSignedUrlDetail } = require('../services/upload.service')
 
 class UserService {
 
@@ -25,9 +26,13 @@ class UserService {
         filter.role = { $in: searchRole }
       }
 
-      const result = await userModel.find(filter).limit(pageSize).skip((currentPage - 1) * pageSize).lean();
+      let result = await userModel.find(filter).limit(pageSize).skip((currentPage - 1) * pageSize).lean();
 
       const totalPage = Math.ceil(await userModel.countDocuments(filter) / pageSize);
+      // // if user role is moderator
+      // result = result.map(user => user.role !== 'Moderator');
+      // // if user role is admin
+      // result = result.map(user => user.role !== 'Admin');
 
       return {
         result,
@@ -53,6 +58,11 @@ class UserService {
   static getUserById = async (userId) => {
     try {
       const user = await userModel.findById(userId);
+
+      // get list artWork
+      const artWorkList = await artworkModel.find({
+        authorId: userId
+      });
       // get list follow list
       const followList = await followModel.find({
         userId: userId
@@ -61,16 +71,10 @@ class UserService {
       const followByList = await followModel.find({
         followBy: userId
       });
-      // get list artWork
-      const artWorkList = await artworkModel.find({
-        authorId: userId
-      });
 
-      artWorkList.map(artWork => {
-        return {
-          imageURL: artWork.imageURL,
-        }
-      });
+      // for(int i =0 ; i < artWorkList.length; i++) {
+
+      // }
 
       return {
         userId: user._id,

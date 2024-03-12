@@ -20,8 +20,9 @@ const uploadImageFromURL = async (uriImage, imageName, userId) => {
 }
 
 // upload image from local
-const uploadImageFromLocal = async ({ path, imageName, userId }) => {
+const uploadImageFromLocal = async ({ path, imageName }) => {
     try {
+        console.log(imageName)
         // set default folder
         const result = await cloudinary.uploader.upload(
             path,
