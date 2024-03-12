@@ -31,7 +31,6 @@ const uploadImageFromLocal = async ({ path, imageName }) => {
                 folder: `artWork/1`
             }
         )
-
         console.log('result : ', result);
 
         return {
@@ -64,8 +63,21 @@ const createSignedUrlDetail = async (imageFolder) => {
     }
 }
 
+const createUrl = async (imageFolder) => {
+    try {
+        const { data, error } = await supabase
+            .storage
+            .from('SDN')
+            .createSignedUrl(`${imageFolder} `, 60)
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     uploadImageFromURL,
     uploadImageFromLocal,
-    createSignedUrlDetail
+    createSignedUrlDetail,
+    createUrl,
 }

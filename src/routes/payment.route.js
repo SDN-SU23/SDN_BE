@@ -7,7 +7,7 @@ router.get("/returnPayArtWork/:accountId/:amount/:artworkId", paymentController.
 
 router.get("/createPaymentUrlPayArtWork/:accountId/:amount/:artworkId", paymentController.createPaymentUrlPayArtWork);
 
-router.get("/returnRegisterCreator", paymentController.vnPayReturnRegisterCreator);
+router.get("/returnRegisterCreator/:accountId", paymentController.vnPayReturnRegisterCreator);
 
 router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
 

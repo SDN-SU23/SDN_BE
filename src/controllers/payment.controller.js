@@ -177,10 +177,9 @@ class PaymentController {
                 message: 'Bạn đã thanh toán 30000 để đăng ký tác giả',
                 userId: accountId,
             })
+            console.log('done')
 
-            res.status(200).json({
-                message: 'Thanh toán thành công',
-            })
+            res.redirect('http://localhost:5173/done')
         } catch (error) {
             res.status(500).send(error)
         }

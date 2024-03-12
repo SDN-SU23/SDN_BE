@@ -5,6 +5,7 @@ const { getListInfo } = require("../utils");
 const followModel = require('../models/follow.model');
 const artworkModel = require('../models/artwork.model');
 const bcrypt = require('bcrypt');
+const { createSignedUrlDetail, createUrl } = require('./upload.service');
 
 class UserService {
   static getListUser = async (query) => {
@@ -65,11 +66,10 @@ class UserService {
         authorId: userId
       });
 
-      artWorkList.map(artWork => {
-        return {
-          imageURL: artWork.imageURL,
-        }
-      });
+      // artWorkList.forEach(async (artWork) => {
+      //   artWork.imageURL = await createUrl(artWork.imageURL)
+      // })
+
 
       return {
         userId: user._id,
