@@ -1,10 +1,10 @@
 'use strict'
 
-const multer = require('multer');
-const time = require('../helpers/timestamp.helper');
+const multer = require('multer')
+const time = require('../helpers/timestamp.helper')
 
 const uploadMemory = multer({
-    storage: multer.memoryStorage()
+    storage: multer.memoryStorage(),
 })
 
 const uploadDisk = multer({
@@ -14,11 +14,11 @@ const uploadDisk = multer({
         },
         filename: function (req, file, cb) {
             cb(null, `${time.getNowDate()}-${file.originalname}`)
-        }
-    })
+        },
+    }),
 })
 
 module.exports = {
     uploadDisk,
-    uploadMemory
+    uploadMemory,
 }
