@@ -236,6 +236,12 @@ class ArtworkService {
                 (await artworkModel.countDocuments(filter)) / pageSize
             )
 
+            for (let i = 0; i < result.length; i++) {
+                result[i].imageURL = await createSignedUrlDetail(
+                    result[i].imageURL
+                )
+            }
+
             return {
                 result,
                 currentPage: currentPage,
