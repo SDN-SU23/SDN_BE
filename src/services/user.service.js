@@ -52,23 +52,26 @@ class UserService {
 
   static getUserById = async (userId) => {
     try {
+
+      // get list artWork
+      const artWorkList = await artworkModel.find({
+        authorId: userId
+      }).lean();
+
+      for (let i = 0; i < artWorkList.length; i++) {
+        const signURL = await uploadService.createSignedUrlDetailForUser(artWorkList[i].imageURL);
+        artWorkList[i].imageURL = signURL;
+      }
+
       const user = await userModel.findById(userId);
       // get list follow list
       const followList = await followModel.find({
         userId: userId
-      });
+      }).lean();
       // get list follow by
       const followByList = await followModel.find({
         followBy: userId
-      });
-      // get list artWork
-      const artWorkList = await artworkModel.find({
-        authorId: userId
-      });
-
-      for (let i = 0; i < artWorkList.length; i++) {
-        artWorkList[i].imageURL = await uploadService.createSignedUrlDetail(artWorkList[i].imageURL);
-      }
+      }).lean();
 
       return {
         userId: user._id,

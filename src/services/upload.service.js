@@ -58,21 +58,21 @@ const createSignedUrlDetail = async (imageFolder) => {
     }
 }
 
-const createUrl = async (imageFolder) => {
+const createSignedUrlDetailForUser = async (imageFolder) => {
     try {
-        const { data, error } = await supabase
-            .storage
+        const { data, error } = await supabase.storage
             .from('SDN')
-            .createSignedUrl(`${imageFolder} `, 60)
-        return data;
+            .createSignedUrl(`${imageFolder} `, 60 * 5)
+        return data
     } catch (error) {
-        throw error;
+        throw error
     }
 }
+
 
 module.exports = {
     uploadImageFromURL,
     uploadImageFromLocal,
     createSignedUrlDetail,
-    createUrl,
+    createSignedUrlDetailForUser
 }
