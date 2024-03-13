@@ -10,7 +10,9 @@ fs.readdirSync(__dirname).forEach((file) => {
     const routerName = _.camelCase(file.split(".")[0]);
     try {
       router.use(`/${routerName}`, require(`./${file}`));
-    } catch (err) { }
+    } catch (err) {
+      console.error(err);
+    }
   }
 });
 
