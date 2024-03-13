@@ -161,23 +161,23 @@ class PaymentController {
 
     vnPayReturnRegisterCreator = async (req, res) => {
         try {
-            const { accountId } = req.params
-            // create transactiom
-            await transactiomModel.create({
-                type: 'registerCreator',
-                content: 'Thanh toan dang ky tac gia',
-                senderId: accountId,
-                amount: 30000,
-                status: 'completed',
-            })
-            // update account
-            await userModel.findByIdAndUpdate(accountId, { role: 'Creator' })
-            // create notificate to receiver
-            await notificationModel.create({
-                message: 'Bạn đã thanh toán 30000 để đăng ký tác giả',
-                userId: accountId,
-            })
-            console.log('done')
+            // const { accountId } = req.params
+            // // create transactiom
+            // await transactiomModel.create({
+            //     type: 'registerCreator',
+            //     content: 'Thanh toan dang ky tac gia',
+            //     senderId: accountId,
+            //     amount: 30000,
+            //     status: 'completed',
+            // })
+            // // update account
+            // await userModel.findByIdAndUpdate(accountId, { role: 'Creator' })
+            // // create notificate to receiver
+            // await notificationModel.create({
+            //     message: 'Bạn đã thanh toán 30000 để đăng ký tác giả',
+            //     userId: accountId,
+            // })
+            // console.log('done')
 
             res.redirect('http://localhost:5173/done')
         } catch (error) {

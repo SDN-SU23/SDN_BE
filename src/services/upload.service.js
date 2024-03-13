@@ -20,7 +20,6 @@ const uploadImageFromLocal = async ({ path, imageName }) => {
     try {
         console.log(imageName)
         // set default folder
-<<<<<<< HEAD
         const result = await cloudinary.uploader.upload(
             path,
             {
@@ -29,14 +28,6 @@ const uploadImageFromLocal = async ({ path, imageName }) => {
             }
         )
         console.log('result : ', result);
-=======
-        const result = await cloudinary.uploader.upload(path, {
-            public_id: `${imageName}`,
-            folder: `artWork/1`,
-        })
-
-        console.log('result : ', result)
->>>>>>> 73e6cec5b3370971b555ec20aae2e7d26ee2e886
 
         return {
             imageURL: result.secure_url,
@@ -83,8 +74,5 @@ module.exports = {
     uploadImageFromURL,
     uploadImageFromLocal,
     createSignedUrlDetail,
-<<<<<<< HEAD
     createUrl,
-=======
->>>>>>> 73e6cec5b3370971b555ec20aae2e7d26ee2e886
 }
