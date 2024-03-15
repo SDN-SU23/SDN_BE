@@ -137,6 +137,7 @@ class ArtworkService {
                     }
                 })
             }
+            result.isLike = false
             // check like of user
             if (userId) {
                 let react = await reactModel.findOne({
