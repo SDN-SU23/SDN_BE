@@ -21,7 +21,7 @@ class ArtworkController {
     getArtworkDetail = async (req, res) => {
         try {
 
-            const result = await ArtworkService.getArtworkDetail(req.params.artworkId, req.user._id)
+            const result = await ArtworkService.getArtworkDetail(req.params.artworkId)
 
             if (!result) {
                 return res.status(404).json({
