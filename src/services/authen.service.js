@@ -35,7 +35,7 @@ class AuthenService {
                 userMail: email,
                 userId: user._id,
                 role: user.role,
-                avatar: user.avatar
+                avatar: user.avatarUrl
             };
 
         } catch (error) {
