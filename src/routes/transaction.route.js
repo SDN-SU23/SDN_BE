@@ -3,13 +3,13 @@ const router = express.Router();
 const transactionController = require('../controllers/transaction.controller');
 const { checkIsLogin, checkRole } = require('../auth');
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.get('/:userId', transactionController.getListTransactionByUserId);
 
 router.post('/withdraw', transactionController.withDraw);
 
-router.use(checkRole('Admin'))
+// router.use(checkRole('Admin'))
 
 router.get('/admin', transactionController.getListTransaction);
 

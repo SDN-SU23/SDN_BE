@@ -3,7 +3,7 @@ const followController = require("../controllers/follow.controller");
 const router = express.Router();
 const { checkIsLogin } = require('../auth');
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.get("/", followController.getFollowList);
 

@@ -6,9 +6,9 @@ const { checkIsLogin, checkRole } = require('../auth/index')
 
 router.get('/', artworkController.getListArtwork)
 
-router.use(checkIsLogin);
+// router.use(checkIsLogin);
 
-router.use(checkRole('Creator'))
+// router.use(checkRole('Creator'))
 
 router.post('/', artworkController.createArtwork)
 

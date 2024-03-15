@@ -5,7 +5,7 @@ const { checkIsLogin } = require('../auth');
 
 const router = express.Router();
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.get("/:id", notificationController.getNotificationByID);
 

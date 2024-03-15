@@ -3,11 +3,11 @@ const router = express.Router();
 const reportController = require("../controllers/report.controller");
 const { checkIsLogin, checkRole } = require('../auth');
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.post("/", reportController.createReport);
 
-router.use(checkRole('Moderator'))
+// router.use(checkRole('Moderator'))
 
 router.get("/", reportController.getAllReports);
 

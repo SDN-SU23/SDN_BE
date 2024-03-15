@@ -3,7 +3,7 @@ const router = express.Router();
 const reactController = require('../controllers/react.controller');
 const { checkIsLogin } = require('../auth');
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.post('/', reactController.createNewReact);
 

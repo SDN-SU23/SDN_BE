@@ -4,7 +4,7 @@ const { uploadDisk } = require('../configs/multer.config');
 const UploadController = require('../controllers/upload.controller');
 const { checkIsLogin } = require('../auth');
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.post('/', UploadController.uploadImageFromURL);
 

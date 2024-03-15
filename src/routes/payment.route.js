@@ -3,7 +3,7 @@ const router = express.Router();
 const paymentController = require("../controllers/payment.controller");
 const { checkIsLogin } = require('../auth');
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.get("/returnPayArtWork/:accountId/:amount/:artworkId", paymentController.vnPayReturnPayArtWork);
 

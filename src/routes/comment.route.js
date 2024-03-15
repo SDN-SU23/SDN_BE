@@ -7,7 +7,7 @@ router.get('/getList/:artworkId', commentController.getListCommentByArtworkId)
 
 router.get('/:commentId', commentController.getCommentById)
 
-router.use(checkIsLogin)
+// router.use(checkIsLogin)
 
 router.post('/', commentController.createComment)
 
