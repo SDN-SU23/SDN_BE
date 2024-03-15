@@ -34,7 +34,8 @@ class AuthenService {
                 refreshToken: tokenPair.refreshToken,
                 userMail: email,
                 userId: user._id,
-                role: user.role
+                role: user.role,
+                avatar: user.avatar
             };
 
         } catch (error) {
