@@ -143,7 +143,7 @@ class ArtworkController {
         try {
             return res.status(200).json({
                 status: 200,
-                data: await ArtworkService.getListArtWorkByCreator(req.params.userId)
+                data: await ArtworkService.getListArtWorkByCreator(req.params.userId, req.query)
             })
         } catch (error) {
             return res.status(500).json({

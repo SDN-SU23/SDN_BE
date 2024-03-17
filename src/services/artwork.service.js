@@ -221,7 +221,7 @@ class ArtworkService {
             let filter = {}
             // check searchName
             if (searchName) {
-                filter.name = { $regex: searchName, $options: 'i' }
+                filter.title = { $regex: searchName, $options: 'i' }
             }
             // check status
             if (status) {
@@ -257,16 +257,30 @@ class ArtworkService {
         }
     }
 
-    static getListArtWorkByCreator = async (userId) => {
+    static getListArtWorkByCreator = async (userId, query) => {
         try {
+            const { currentPage, pageSize, searchName } = query;
+            let filter = {}
+            if (searchName) {
+                filter.title = { $regex: searchName, $options: 'i' }
+            }
             const result = await artworkModel
-                .find({ authorId: userId })
+                .find({ authorId: userId }, filter)
                 .lean()
+                .limit(pageSize)
+                .skip((currentPage - 1) * pageSize)
             // get signed url of artwork
             for (let i = 0; i < result.length; i++) {
                 result[i].imageURL = await createSignedUrlDetail(result[i].imageURL)
             }
-            return result
+            // get total page
+            const totalPage = await artworkModel.countDocuments({ authorId: userId }, filter)
+            return {
+                result,
+                currentPage: currentPage,
+                pageSize: pageSize,
+                totalPage: totalPage,
+            }
         } catch (error) {
             global.logger.error('Service:: getListArtWorkByCreator', error)
             throw error
