@@ -1,78 +1,72 @@
 const cloudinary = require('../configs/cloudinary.config')
 const { getInfo } = require('../utils/index')
 const supabase = require('../configs/supabase.config')
+const artworkModel = require('../models/artwork.model');
 // upload image from url
-const uploadImageFromURL = async (uriImage, imageName, userId) => {
-    try {
-        const result = await cloudinary.uploader.upload(uriImage, {
-            public_id: imageName,
-            folder: `artWork/${userId}`,
-        })
+class UploadService {
+    static uploadImageFromURL = async (uriImage, imageName, userId) => {
+        try {
+            const result = await cloudinary.uploader.upload(uriImage, {
+                public_id: imageName,
+                folder: `artWork/${userId}`,
+            })
 
-        return result
-    } catch (error) {
-        console.log(`error`, error)
-    }
-}
-
-// upload image from local
-const uploadImageFromLocal = async ({ path, imageName }) => {
-    try {
-        console.log(imageName)
-        // set default folder
-        const result = await cloudinary.uploader.upload(
-            path,
-            {
-                public_id: `${imageName}`,
-                folder: `artWork/1`
-            }
-        )
-        console.log('result : ', result);
-
-        return {
-            imageURL: result.secure_url,
+            return result
+        } catch (error) {
+            console.log(`error`, error)
         }
-    } catch (error) {
-        console.log('Error in uploading the file : ', error)
+    }
+
+    // upload image from local
+    static uploadImageFromLocal = async ({ path, imageName }) => {
+        try {
+            console.log(imageName)
+            // set default folder
+            const result = await cloudinary.uploader.upload(
+                path,
+                {
+                    public_id: `${imageName}`,
+                    folder: `artWork/1`
+                }
+            )
+            console.log('result : ', result);
+
+            return {
+                imageURL: result.secure_url,
+            }
+        } catch (error) {
+            console.log('Error in uploading the file : ', error)
+        }
+    }
+
+    static createSignedUrlDetail = async (imageFolder) => {
+        try {
+            const { data, error } = await supabase.storage
+                .from('SDN')
+                .createSignedUrl(`${imageFolder} `, 60)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static downloadImageByUser = async (artWorkID) => {
+        try {
+            // check if artwork exist
+            const artWorkDetail = await artworkModel.findById(artWorkID);
+            const imageURL = await this.createSignedUrlDetail(artWorkDetail.imageURL);
+            // download image
+            // await supabase
+            //     .storage
+            //     .from('SDN')
+            //     .download(artWorkDetail.imageURL)
+            return imageURL
+        } catch (error) {
+            throw error
+        }
     }
 }
 
-const getImageFromUrl = async (url) => {
-    try {
-        const result = await cloudinary.image(url)
+// const downloadImage = async (req, res) => {}
 
-        return result
-    } catch (error) {
-        console.log(`error`, error)
-    }
-}
-
-const createSignedUrlDetail = async (imageFolder) => {
-    try {
-        const { data, error } = await supabase.storage
-            .from('SDN')
-            .createSignedUrl(`${imageFolder} `, 60)
-        return data
-    } catch (error) {
-        throw error
-    }
-}
-
-const createSignedUrlDetailForUser = async (imageFolder) => {
-    try {
-        const { data, error } = await supabase.storage
-            .from('SDN')
-            .createSignedUrl(`${imageFolder} `, 60 * 5)
-        return data
-    } catch (error) {
-        throw error
-    }
-}
-
-
-module.exports = {
-    uploadImageFromURL,
-    uploadImageFromLocal,
-    createSignedUrlDetail,
-    createSignedUrlDetailForUser
-}
+module.exports = UploadService;

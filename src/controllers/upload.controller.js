@@ -1,9 +1,6 @@
 'use strict'
 
-const {
-    uploadImageFromURL,
-    uploadImageFromLocal,
-} = require('../services/upload.service')
+const { uploadImageFromURL, uploadImageFromLocal, downloadImageByUser } = require('../services/upload.service')
 
 class UploadController {
     uploadImageFromURL = async (req, res) => {
@@ -35,6 +32,21 @@ class UploadController {
                     path: file.path,
                     imageName: file.filename,
                 }),
+            })
+        } catch (error) {
+            return res.status(500).json({
+                error: error,
+            })
+        }
+    }
+
+    downloadImage = async (req, res) => {
+        try {
+            const { artworkId } = req.params
+            console.log(`artworkId`, artworkId)
+            return res.status(200).json({
+                message: 'Download image successfully',
+                metadata: await downloadImageByUser(artworkId),
             })
         } catch (error) {
             return res.status(500).json({
