@@ -17,9 +17,9 @@ const transactionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    receiverId: {
+    artworkId: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Artwork',
     },
     amount: {
         type: Number,

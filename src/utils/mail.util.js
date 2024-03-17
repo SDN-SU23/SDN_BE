@@ -53,7 +53,7 @@ const confirmPayment = ({ customer_name, order_number, order_date, total_amount 
         <ul>
           <li>Order Number: ${order_number}</li>
           <li>Order Date: ${order_date}</li>
-          <li>Total Amount: ${total_amount}</li>
+          <li>Total Amount: ${total_amount}VND</li>
         </ul>
         <p>Thank you for shopping with us!</p>
     </body>

@@ -5,9 +5,9 @@ const { checkIsLogin } = require('../auth');
 
 // router.use(checkIsLogin)
 
-router.get("/returnPayArtWork/:accountId/:amount/:artworkId", paymentController.vnPayReturnPayArtWork);
+router.get("/createPaymentURL/:accountId/:artworkId", paymentController.createPaymentUrlPayArtWork);
 
-router.get("/createPaymentUrlPayArtWork/:accountId/:artworkId", paymentController.createPaymentUrlPayArtWork);
+router.get("/returnURL/:transaction_code", paymentController.returnPayArtWorkSuccess);
 
 // router.get("/returnRegisterCreator/:accountId", paymentController.vnPayReturnRegisterCreator);
 

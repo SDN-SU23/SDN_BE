@@ -44,7 +44,7 @@ class TransactionService {
                 .limit(query.pageSize)
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId', 'name')
-                .populate('receiverId', 'name')
+                .populate('artworkId')
             // count total page
             const totalPage = Math.ceil(await transactionModel.countDocuments() / query.pageSize);
             return {
