@@ -5,10 +5,9 @@ const paymentService = require('../services/payment.service');
 class PaymentController {
     createPaymentUrlPayArtWork = async (req, res) => {
         try {
-            const { accountId, artworkId } = req.params
-            res.status(200).json({
-                metadata: await paymentService.createNewOrder(accountId, artworkId)
-            })
+            const { accountId, artworkId } = req.params;
+            const url = await paymentService.createNewOrder(accountId, artworkId);
+            res.redirect(url.checkoutUrl)
             // res.redirect(vnpUrl)
         } catch (error) {
             res.status(500).send(error)
