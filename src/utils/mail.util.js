@@ -55,15 +55,7 @@ const confirmPayment = ({ customer_name, order_number, order_date, total_amount 
           <li>Order Date: ${order_date}</li>
           <li>Total Amount: ${total_amount}</li>
         </ul>
-        <p>
-          If you have any questions or concerns regarding your order, feel free to
-          <a href="baohc110902@gmail.com">contact us</a>.
-        </p>
         <p>Thank you for shopping with us!</p>
-      <div style="text-align:center ;">
-        <a href="localhost:5173" class="button">Visit Our Website</a>
-        <a href="[Link to Your Collection]" class="button">Your Collection</a>
-      </div>
     </body>
   </html>`
 }
@@ -200,9 +192,6 @@ const newAccount = ({ user_mail, user_name, user_password, user_role }) => {
           provided.
         </p>
         <p>Thank you for joining us!</p>
-        <div style="text-align: center">
-          <a href="[Activation Link]" class="button">Visit Our Website</a>
-        </div>
       </div>
     </body>
   </html>`
