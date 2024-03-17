@@ -43,6 +43,10 @@ var userSchema = new Schema(
       enum: ['Audience', 'Admin', 'Creator', 'Moderator'],
       default: 'Audience'
     },
+    wallet: {
+      type: Number,
+      default: 0,
+    }
   },
   {
     timestamps: true,

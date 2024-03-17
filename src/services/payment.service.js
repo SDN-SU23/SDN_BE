@@ -79,6 +79,16 @@ class PaymentService {
             const user = await userModel.findOne({
                 _id: transaction.senderId
             });
+            // get detail author
+            const author = await userModel.findOne({
+                _id: artwork.authorId
+            })
+            // update wallet author
+            await userModel.findByIdAndUpdate({
+                _id: artwork.authorId
+            }, {
+                wallet: author.wallet + artwork.price
+            })
             // create notification
             await notificationModel.create({
                 userId: transaction.senderId,
