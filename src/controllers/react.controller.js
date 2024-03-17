@@ -32,6 +32,21 @@ class ReactController {
                 .json({ message: error.message })
         }
     }
+
+    getReactByArtworkId = async (req, res) => {
+        try {
+            return res
+                .status(200)
+                .json({
+                    message: 'React deleted successfully',
+                    data: await ReactService.getReactByArtworkId(req.params.artworkId)
+                })
+        } catch (error) {
+            return res
+                .status(500)
+                .json({ message: error.message })
+        }
+    }
 }
 
 module.exports = new ReactController();

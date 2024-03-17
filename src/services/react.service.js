@@ -58,6 +58,19 @@ class ReactService {
             throw error;
         }
     }
+
+    static getReactByArtworkId = async (artworkId) => {
+        try {
+            // get list react by artworkId
+            const result = await reactModel.find({
+                artworkId: artworkId
+            }).populate('userId');
+            return result;
+        } catch (error) {
+            // do something
+            throw error;
+        }
+    }
 }
 
 module.exports = ReactService;

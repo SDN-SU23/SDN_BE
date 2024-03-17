@@ -9,6 +9,6 @@ router.post('/', reactController.createNewReact);
 
 router.delete('/', reactController.deleteReact);
 
-// router.get('/:artworkId'.reactController.getReactByArtworkId)
+router.get('/:artworkId', reactController.getReactByArtworkId)
 
 module.exports = router;
