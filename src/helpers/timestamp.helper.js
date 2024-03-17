@@ -29,6 +29,14 @@ const payGetNow = (date) => {
     return moment(date).format('yyyymmddHHmmss')
 }
 
+const addOneDayUnix = () => {
+    return moment().add(1, 'days').unix()
+}
+
+const addFiveMinuteUnix = () => {
+    return moment().add(5, 'minutes').unix()
+}
+
 module.exports = {
     getNow,
     getNowDate,
@@ -36,5 +44,7 @@ module.exports = {
     convertToNormalDate,
     payGetTime,
     payGetDate,
-    payGetNow
+    payGetNow,
+    addOneDayUnix,
+    addFiveMinuteUnix
 }
