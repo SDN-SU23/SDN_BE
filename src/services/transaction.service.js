@@ -2,6 +2,7 @@
 
 const { orderBy } = require('lodash');
 const transactionModel = require('../models/transaction.model');
+const artworkModel = require('../models/artwork.model');
 
 class TransactionService {
 
@@ -71,6 +72,41 @@ class TransactionService {
                 totalPage: totalPage,
                 pageSize: query.pageSize,
                 currentPage: query.currentPage,
+            };
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    static getListTransactionByCreator = async (query, creatorId) => {
+        try {
+            const listArtWork = await artworkModel.find({ authorId: creatorId }).lean();
+            // find transaction by artworkId
+            let listTransaction = [];
+            for (let i = 0; i < listArtWork.length; i++) {
+                const transaction = await transactionModel
+                    .find({ artworkId: listArtWork[i]._id })
+                    .populate('senderId')
+                    .populate('artworkId')
+                    .sort({ createdAt: -1 })
+                    .lean();
+                listTransaction = listTransaction.concat(transaction);
+            }
+            // map data 
+            const result = listTransaction.map((item) => {
+                return {
+                    buyer_name: item.senderId.name,
+                    artwork_title: item.artworkId.title,
+                    amount: item.amount,
+                    createdAt: item.createdAt,
+                    status: item.status
+                }
+            })
+            return {
+                result,
+                pageSize: query.pageSize,
+                currentPage: query.currentPage,
+                totalPage: Math.ceil(listTransaction.length / query.pageSize)
             };
         } catch (error) {
             throw new Error(error.message);

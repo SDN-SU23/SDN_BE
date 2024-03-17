@@ -10,6 +10,7 @@ router.get('/getListByUser/:userId', transactionController.getListTransactionByU
 // router.use(checkRole('Admin'))
 router.get('/getListByAdmin', transactionController.getListTransaction);
 // get list withdraw by admin
+router.get('/getListTransactionByCreator/:creatorId', transactionController.getListTransactionByCreator);
 // router.get('/getListWithdrawByAdmin', transactionController.getListWithdrawByAdmin);
 // // get list withdraw by user
 // router.get('/getListWithdrawByUser/:userId', transactionController.getListWithdrawByUser);

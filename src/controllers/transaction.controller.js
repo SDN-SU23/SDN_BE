@@ -33,6 +33,18 @@ class TransactionController {
         }
     }
 
+    getListTransactionByCreator = async (req, res) => {
+        try {
+            const response = await TransactionService.getListTransactionByCreator(req.query, req.params.creatorId);
+            return res.status(200).json({
+                message: 'Get list transaction by creator successfully',
+                result: response
+            });
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    }
+
     // getListWithdrawByAdmin = async (req, res) => {
     //     try {
     //         const response = await TransactionService.getListWithdrawByAdmin(req.query);
