@@ -187,6 +187,7 @@ class ArtworkService {
 
     static updateArtwork = async (artworkId, data) => {
         try {
+            // check user is author of artwork
             const result = await artworkModel.findByIdAndUpdate(
                 artworkId,
                 data,
@@ -252,6 +253,22 @@ class ArtworkService {
             }
         } catch (error) {
             global.logger.error('Service:: getArtWorkByAdmin', error)
+            throw error
+        }
+    }
+
+    static getListArtWorkByCreator = async (userId) => {
+        try {
+            const result = await artworkModel
+                .find({ authorId: userId })
+                .lean()
+            // get signed url of artwork
+            for (let i = 0; i < result.length; i++) {
+                result[i].imageURL = await createSignedUrlDetail(result[i].imageURL)
+            }
+            return result
+        } catch (error) {
+            global.logger.error('Service:: getListArtWorkByCreator', error)
             throw error
         }
     }

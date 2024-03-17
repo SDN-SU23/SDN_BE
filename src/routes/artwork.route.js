@@ -10,6 +10,8 @@ router.get('/', artworkController.getListArtwork)
 
 // router.use(checkRole('Creator'))
 
+router.get('/getListArtWorkByCreator/:userId', artworkController.getListArtWorkByCreator)
+
 router.post('/', artworkController.createArtwork)
 
 router.delete('/:artworkId', artworkController.deleteArtwork)
