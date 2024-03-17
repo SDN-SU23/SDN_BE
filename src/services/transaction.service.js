@@ -1,5 +1,6 @@
 'use strict'
 
+const { orderBy } = require('lodash');
 const transactionModel = require('../models/transaction.model');
 
 class TransactionService {
@@ -23,10 +24,12 @@ class TransactionService {
     static getListTransactionByUserId = async (query, userId) => {
         try {
             const response = await transactionModel
-                .find({ senderId: userId, type: 'payArtWork' })
+                .find({ senderId: userId, type: 'payArtWork' }, orderBy('createdAt', 'desc'))
                 .limit(query.pageSize)
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId', 'name')
+                .sort({ createdAt: -1 })
+                .lean();
             // count total page
             const totalPage = Math.ceil(await transactionModel.countDocuments({ senderId: userId }) / query.pageSize);
             return {
@@ -48,11 +51,13 @@ class TransactionService {
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId', 'name')
                 .populate('artworkId')
+                .sort({ createdAt: -1 })
+                .lean();
             // count total page
-            const totalPage = Math.ceil(await transactionModel.countDocuments() / query.pageSize);
+            const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'payArtWork' }) / query.pageSize);
             return {
                 response,
-                totalPage,
+                totalPage: totalPage,
                 pageSize: query.pageSize,
                 currentPage: query.currentPage,
             };
@@ -68,6 +73,8 @@ class TransactionService {
                 .limit(query.pageSize)
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId', 'name')
+                .sort({ createdAt: -1 })
+                .lean();
             // count total page
             const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'withdraw' }) / query.pageSize);
             return {
@@ -88,6 +95,8 @@ class TransactionService {
                 .limit(query.pageSize)
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId')
+                .sort({ createdAt: -1 })
+                .lean();
             // count total page
             const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'withdraw' }) / query.pageSize);
             return {
