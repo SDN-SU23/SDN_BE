@@ -42,6 +42,16 @@ class ReactService {
                 artworkId: artworkId,
                 userId: userId
             })
+            // get detail artwork
+            const artwork = await artworkModel.findOne({
+                _id: artworkId
+            });
+            // update react number
+            await artworkModel.findOneAndUpdate({
+                _id: artworkId
+            }, {
+                reactNumber: artwork.reactNumber - 1
+            })
             return result;
         } catch (error) {
             // do something
