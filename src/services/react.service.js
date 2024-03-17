@@ -14,6 +14,12 @@ class ReactService {
             const artwork = await artworkModel.findOne({
                 _id: data.artworkId
             });
+            // 
+            await artworkModel.findOneAndUpdate({
+                _id: data.artworkId
+            }, {
+                reactNumber: artwork.reactNumber + 1
+            })
             // // send notification to author of artwork
             // const sendNotification = await notifcationModel.create({
             //     userId: artwork.authorId,
