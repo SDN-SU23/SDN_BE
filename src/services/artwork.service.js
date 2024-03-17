@@ -134,6 +134,7 @@ class ArtworkService {
                         authorName: item.authorId.name,
                         content: item.content,
                         commentId: item._id,
+                        authorId: item.authorId._id,
                     }
                 })
             }
