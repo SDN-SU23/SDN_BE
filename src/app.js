@@ -47,15 +47,12 @@ const passport = require('./configs/passport.config')
 // init passport
 app.use(passport.initialize())
 app.use(passport.session())
-app.get(
-    '/auth/google',
-    passport.authenticate('google', {
-        scope: ['profile', 'email'],
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], }), (req, res) => {
+    return res.json({
+        req: req,
     })
-)
-app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
+})
+app.get('/auth/google/callback', passport.authenticate('google'),
     (req, res) => {
         return res.json({
             req: req,

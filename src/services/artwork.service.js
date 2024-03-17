@@ -264,8 +264,9 @@ class ArtworkService {
             if (searchName) {
                 filter.title = { $regex: searchName, $options: 'i' }
             }
+            filter.authorId = userId
             const result = await artworkModel
-                .find({ authorId: userId }, filter)
+                .find(filter)
                 .lean()
                 .limit(pageSize)
                 .skip((currentPage - 1) * pageSize)
@@ -274,7 +275,7 @@ class ArtworkService {
                 result[i].imageURL = await createSignedUrlDetail(result[i].imageURL)
             }
             // get total page
-            const totalPage = (await artworkModel.countDocuments({ authorId: userId }, filter) / pageSize);
+            const totalPage = (await artworkModel.countDocuments(filter) / pageSize);
             return {
                 result,
                 currentPage: currentPage,
