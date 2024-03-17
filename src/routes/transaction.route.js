@@ -13,6 +13,4 @@ router.post('/withdraw', transactionController.withDraw);
 
 router.get('/getListByAdmin', transactionController.getListTransaction);
 
-router.put('/:transactionId', transactionController.updateTransaction);
-
 module.exports = router

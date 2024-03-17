@@ -37,15 +37,6 @@ class TransactionService {
         }
     }
 
-    static updateTransaction = async (transactionId, status) => {
-        try {
-            const response = await transactionModel.findByIdAndUpdate(transactionId, { status: status });
-            return response;
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
-
     static getListTransaction = async (query) => {
         try {
             const response = await transactionModel
