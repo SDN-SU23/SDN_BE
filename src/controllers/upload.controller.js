@@ -42,11 +42,9 @@ class UploadController {
 
     downloadImage = async (req, res) => {
         try {
-            const { artworkId } = req.params
-            console.log(`artworkId`, artworkId)
             return res.status(200).json({
                 message: 'Download image successfully',
-                metadata: await downloadImageByUser(artworkId),
+                metadata: await downloadImageByUser(req.body.artworkId, req.body.userId),
             })
         } catch (error) {
             return res.status(500).json({

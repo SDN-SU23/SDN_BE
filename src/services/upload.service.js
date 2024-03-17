@@ -2,6 +2,7 @@ const cloudinary = require('../configs/cloudinary.config')
 const { getInfo } = require('../utils/index')
 const supabase = require('../configs/supabase.config')
 const artworkModel = require('../models/artwork.model');
+const collectionModel = require('../models/collection.model');
 // upload image from url
 class UploadService {
     static uploadImageFromURL = async (uriImage, imageName, userId) => {
@@ -50,10 +51,17 @@ class UploadService {
         }
     }
 
-    static downloadImageByUser = async (artWorkID) => {
+    static downloadImageByUser = async (artWorkId, userId) => {
         try {
             // check if artwork exist
-            const artWorkDetail = await artworkModel.findById(artWorkID);
+            const isCollection = await collectionModel.findOne({
+                imageId: artWorkId,
+                authorId: userId
+            })
+            if (!isCollection) {
+                throw new Error(`You didn't buy this artwork yet!`)
+            }
+            const artWorkDetail = await artworkModel.findById(artWorkId);
             const imageURL = await this.createSignedUrlDetail(artWorkDetail.imageURL);
             // download image
             // await supabase
