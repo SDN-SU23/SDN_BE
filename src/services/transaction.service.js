@@ -23,15 +23,21 @@ class TransactionService {
 
     static getListTransactionByUserId = async (query, userId) => {
         try {
+            let filter = {};
+            if (query.type) {
+                filter.type = query.type;
+            }
+            filter.senderId = userId;
+
             const response = await transactionModel
-                .find({ senderId: userId, type: 'payArtWork' }, orderBy('createdAt', 'desc'))
+                .find(filter)
                 .limit(query.pageSize)
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId', 'name')
                 .sort({ createdAt: -1 })
                 .lean();
             // count total page
-            const totalPage = Math.ceil(await transactionModel.countDocuments({ senderId: userId }) / query.pageSize);
+            const totalPage = Math.ceil(await transactionModel.countDocuments(filter) / query.pageSize);
             return {
                 response,
                 totalPage,
@@ -45,8 +51,13 @@ class TransactionService {
 
     static getListTransaction = async (query) => {
         try {
+            console.log(JSON.stringify(query));
+            let filter = {};
+            if (query.type) {
+                filter.type = query.type;
+            }
             const response = await transactionModel
-                .find({ type: 'payArtWork' })
+                .find(filter)
                 .limit(query.pageSize)
                 .skip((query.currentPage - 1) * query.pageSize)
                 .populate('senderId', 'name')
@@ -54,7 +65,7 @@ class TransactionService {
                 .sort({ createdAt: -1 })
                 .lean();
             // count total page
-            const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'payArtWork' }) / query.pageSize);
+            const totalPage = Math.ceil(await transactionModel.countDocuments(filter) / query.pageSize);
             return {
                 response,
                 totalPage: totalPage,
@@ -66,49 +77,49 @@ class TransactionService {
         }
     }
 
-    static getListWithdrawByAdmin = async (query) => {
-        try {
-            const result = await transactionModel
-                .find({ type: 'withdraw' })
-                .limit(query.pageSize)
-                .skip((query.currentPage - 1) * query.pageSize)
-                .populate('senderId', 'name')
-                .sort({ createdAt: -1 })
-                .lean();
-            // count total page
-            const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'withdraw' }) / query.pageSize);
-            return {
-                result,
-                totalPage,
-                pageSize: query.pageSize,
-                currentPage: query.currentPage,
-            };
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
+    // static getListWithdrawByAdmin = async (query) => {
+    //     try {
+    //         const result = await transactionModel
+    //             .find({ type: 'withdraw' })
+    //             .limit(query.pageSize)
+    //             .skip((query.currentPage - 1) * query.pageSize)
+    //             .populate('senderId', 'name')
+    //             .sort({ createdAt: -1 })
+    //             .lean();
+    //         // count total page
+    //         const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'withdraw' }) / query.pageSize);
+    //         return {
+    //             result,
+    //             totalPage,
+    //             pageSize: query.pageSize,
+    //             currentPage: query.currentPage,
+    //         };
+    //     } catch (error) {
+    //         throw new Error(error.message);
+    //     }
+    // }
 
-    static getListWithdrawByUser = async (query, senderId) => {
-        try {
-            const result = await transactionModel
-                .find({ type: 'withdraw', senderId: senderId })
-                .limit(query.pageSize)
-                .skip((query.currentPage - 1) * query.pageSize)
-                .populate('senderId')
-                .sort({ createdAt: -1 })
-                .lean();
-            // count total page
-            const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'withdraw' }) / query.pageSize);
-            return {
-                result,
-                totalPage,
-                pageSize: query.pageSize,
-                currentPage: query.currentPage,
-            };
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
+    // static getListWithdrawByUser = async (query, senderId) => {
+    //     try {
+    //         const result = await transactionModel
+    //             .find({ type: 'withdraw', senderId: senderId })
+    //             .limit(query.pageSize)
+    //             .skip((query.currentPage - 1) * query.pageSize)
+    //             .populate('senderId')
+    //             .sort({ createdAt: -1 })
+    //             .lean();
+    //         // count total page
+    //         const totalPage = Math.ceil(await transactionModel.countDocuments({ type: 'withdraw' }) / query.pageSize);
+    //         return {
+    //             result,
+    //             totalPage,
+    //             pageSize: query.pageSize,
+    //             currentPage: query.currentPage,
+    //         };
+    //     } catch (error) {
+    //         throw new Error(error.message);
+    //     }
+    // }
 
     static updateWithdrawStatus = async (id, status) => {
         try {
