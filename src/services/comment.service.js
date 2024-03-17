@@ -8,8 +8,7 @@ const notifcationModel = require('../models/notification.model')
 class CommentService {
     static getListCommentByArtworkId = async (artworkId) => {
         try {
-            const result = await commentModel.find({ artworkId })
-            console.log(result)
+            const result = await commentModel.find({ artworkId }).populate('authorId').lean()
             return result
         } catch (error) {
             global.logger.error('Service:: getListCommentByArtworkId', error)
