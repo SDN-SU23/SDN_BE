@@ -18,7 +18,7 @@ router.get('/getArtWorkDetailByUser/:artworkId', artworkController.getArtworkDet
 
 router.put('/:artworkId', artworkController.updateArtwork)
 
-router.use(checkRole('Admin'))
+// router.use(checkRole('Admin'))
 
 router.put('/updateByAdmin/:artworkId', artworkController.updateArtworkByAdmin)
 
