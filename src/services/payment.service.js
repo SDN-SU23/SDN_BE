@@ -28,7 +28,7 @@ class PaymentService {
             // create a new transaction 
             const transaction = await transactionModel.create({
                 type: 'payArtWork',
-                content: 'Thanh toan cho tac pham',
+                content: 'Pay for artwork',
                 senderId: accountId,
                 artworkId: artworkId,
                 amount: amount,
