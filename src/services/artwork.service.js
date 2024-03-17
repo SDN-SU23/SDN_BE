@@ -274,7 +274,7 @@ class ArtworkService {
                 result[i].imageURL = await createSignedUrlDetail(result[i].imageURL)
             }
             // get total page
-            const totalPage = await artworkModel.countDocuments({ authorId: userId }, filter)
+            const totalPage = (await artworkModel.countDocuments({ authorId: userId }, filter) / pageSize);
             return {
                 result,
                 currentPage: currentPage,
