@@ -5,7 +5,12 @@ const Report = require("../models/report.model");
 class ReportService {
   static getAllReports = async (query) => {
     try {
-      const result = await Report.find().limit(query.pageSize).skip((query.currentPage - 1) * query.pageSize).lean();
+      const result = await Report
+        .find()
+        .limit(query.pageSize)
+        .skip((query.currentPage - 1) * query.pageSize)
+        .populate('authorId')
+        .lean();
       return {
         result,
         currentPage: query.currentPage,
@@ -28,7 +33,8 @@ class ReportService {
 
   static getReportByID = async (id) => {
     try {
-      return await Report.findById(id);
+      const report = await Report.findById(id).populate('authorId').lean();
+      return report;
     } catch (error) {
       throw new Error("Error retrieving report by ID: " + error.message);
     }
