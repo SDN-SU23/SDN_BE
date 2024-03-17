@@ -46,11 +46,18 @@ class ReactService {
             const artwork = await artworkModel.findOne({
                 _id: artworkId
             });
+            let newReact;
+            // update react number
+            if (artwork.reactNumber === 0) {
+                newReact = 0;
+            } else {
+                newReact = artwork.reactNumber - 1;
+            }
             // update react number
             await artworkModel.findOneAndUpdate({
                 _id: artworkId
             }, {
-                reactNumber: artwork.reactNumber - 1
+                reactNumber: newReact
             })
             return result;
         } catch (error) {
