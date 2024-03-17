@@ -24,6 +24,15 @@ class PaymentController {
         }
     }
 
+    returnPayArtWorkFail = async (req, res) => {
+        try {
+            const url = await paymentService.returnPayArtWorkFail(req.params.transaction_code)
+            res.redirect(url)
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    }
+
     // sortObject = (obj) => {
     //     let sorted = {}
     //     let str = []

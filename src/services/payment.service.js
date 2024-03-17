@@ -41,7 +41,7 @@ class PaymentService {
                 amount: amount,
                 orderCode: Math.floor(Math.random() * 1000) + 1,
                 description: "VQRIO123",
-                cancelUrl: 'http://localhost:3000/cancel',
+                cancelUrl: `${global.config.payos.return_url_fail}/${transaction._id}`,
                 returnUrl: `${global.config.payos.return_url}/${transaction._id}`,
                 expiredAt: time.addFiveMinuteUnix(),
                 signature: 'string',
@@ -112,6 +112,19 @@ class PaymentService {
             throw error;
         }
 
+    }
+
+    static returnPayArtWorkFail = async (transaction_code) => {
+        const transaction = await transactionModel.findOne({
+            _id: transaction_code
+        });
+        // update status
+        await transactionModel.findByIdAndUpdate({
+            _id: transaction_code
+        }, {
+            status: 'failed'
+        });
+        return `http://localhost:5173/home`
     }
 }
 

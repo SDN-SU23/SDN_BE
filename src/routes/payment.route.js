@@ -9,6 +9,8 @@ router.get("/createPaymentURL/:accountId/:artworkId", paymentController.createPa
 
 router.get("/returnURL/:transaction_code", paymentController.returnPayArtWorkSuccess);
 
+router.get("/returnURLFail/:transaction_code", paymentController.returnPayArtWorkFail);
+
 // router.get("/returnRegisterCreator/:accountId", paymentController.vnPayReturnRegisterCreator);
 
 // router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
