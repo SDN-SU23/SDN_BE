@@ -44,7 +44,7 @@ class UploadService {
         try {
             const { data, error } = await supabase.storage
                 .from('SDN')
-                .createSignedUrl(`${imageFolder} `, 60)
+                .createSignedUrl(`${imageFolder} `, 15)
             return data
         } catch (error) {
             throw error
