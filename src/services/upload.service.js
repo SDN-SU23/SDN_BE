@@ -73,6 +73,17 @@ class UploadService {
             throw error
         }
     }
+
+    static createSignedUrlDetailForUser = async (imageFolder) => {
+        try {
+            const { data, error } = await supabase.storage
+                .from('SDN')
+                .createSignedUrl(`${imageFolder} `, 60 * 5)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 // const downloadImage = async (req, res) => {}
