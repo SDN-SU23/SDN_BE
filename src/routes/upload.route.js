@@ -9,7 +9,7 @@ const { checkIsLogin } = require('../auth');
 router.post('/', UploadController.uploadImageFromURL);
 
 router.post('/thumb', uploadDisk.single('file'), UploadController.uploadImageFromLocal);
-// router.get('/', UploadController.getImage);
-router.post('/download/:artworkId', UploadController.downloadImage);
+// router.get('/', UploadController.getImage    );
+router.post('/download', UploadController.downloadImage);
 
 module.exports = router;

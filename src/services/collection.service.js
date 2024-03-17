@@ -17,16 +17,11 @@ class CollectionService {
 
   static getListCollectionByUserId = async (userId) => {
     try {
-      let result = await collectionModel.find({ authorId: userId }).populate("imageId").lean();
+      let result = await collectionModel.find({ authorId: userId }).populate("imageId").populate("authorId").lean();
 
       for (let i = 0; i < result.length; i++) {
         result[i].imageURL = await createSignedUrlDetail(result[i].imageId.imageURL)
       }
-
-      result = getListInfo({
-        field: ["imageURL", "imageId.title", "imageId._id"],
-        object: result,
-      })
 
       return result
     } catch (error) {
