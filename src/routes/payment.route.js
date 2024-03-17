@@ -7,11 +7,11 @@ const { checkIsLogin } = require('../auth');
 
 router.get("/returnPayArtWork/:accountId/:amount/:artworkId", paymentController.vnPayReturnPayArtWork);
 
-router.get("/createPaymentUrlPayArtWork/:accountId/:amount/:artworkId", paymentController.createPaymentUrlPayArtWork);
+router.get("/createPaymentUrlPayArtWork/:accountId/:artworkId", paymentController.createPaymentUrlPayArtWork);
 
-router.get("/returnRegisterCreator/:accountId", paymentController.vnPayReturnRegisterCreator);
+// router.get("/returnRegisterCreator/:accountId", paymentController.vnPayReturnRegisterCreator);
 
-router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
+// router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
 
 
 module.exports = router;

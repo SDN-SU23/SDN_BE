@@ -82,7 +82,7 @@ class AuthenService {
             const { email } = data;
             // check mail exist
             const user = await userModel.findOne({ email: data.email });
-            if (!user) throw new Error('Mail is invalid');
+            if (!user) throw new Error('Mail is not exist');
             // random pass 10 char
             const randomPass = Math.random().toString(36).slice(-10);
             // hash pass
