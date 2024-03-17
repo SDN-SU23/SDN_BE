@@ -12,6 +12,14 @@ const userModel = require('../models/user.model');
 class PaymentService {
     static createNewOrder = async (accountId, artworkId) => {
         try {
+            // get collection detail
+            const isBuyed = await collectionModel.findOne({
+                authorId: accountId,
+                imageId: artworkId
+            })
+            if (isBuyed) {
+                throw new Error('You have already bought this artwork!')
+            }
             // get detail artwork
             const artwork = await artworkModel.findOne({
                 _id: artworkId
