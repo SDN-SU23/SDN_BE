@@ -37,6 +37,10 @@ const addFiveMinuteUnix = () => {
     return moment().add(5, 'minutes').unix()
 }
 
+const addOneMonth = () => {
+    return moment().add(1, 'months').unix()
+}
+
 module.exports = {
     getNow,
     getNowDate,
@@ -46,5 +50,6 @@ module.exports = {
     payGetDate,
     payGetNow,
     addOneDayUnix,
-    addFiveMinuteUnix
+    addFiveMinuteUnix,
+    addOneMonth
 }

@@ -9,12 +9,13 @@ router.get("/createPaymentURL/:accountId/:artworkId", paymentController.createPa
 
 router.get("/returnURL/:transaction_code", paymentController.returnPayArtWorkSuccess);
 
-router.get("/returnURLFail/:transaction_code", paymentController.returnPayArtWorkFail);
+router.get("/returnURLFail/payArtWork/:transaction_code", paymentController.returnPayArtWorkFail);
 
-// router.get("/returnRegisterCreator/:accountId", paymentController.vnPayReturnRegisterCreator);
+router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
 
-// router.get("/createPaymentUrlRegisterCreator/:accountId", paymentController.createPaymentUrlRegisterCreator);
+router.get("/returnURL/registerCreator/:transaction_code", paymentController.returnRegisterCreatorSuccess);
 
+router.get("/returnURLFail/registerCreator/:transaction_code", paymentController.returnRegisterCreatorFail);
 
 module.exports = router;
 

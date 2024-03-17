@@ -46,6 +46,10 @@ var userSchema = new Schema(
     wallet: {
       type: Number,
       default: 0,
+    },
+    expired_at: {
+      type: Date,
+      default: Date.now(),
     }
   },
   {
