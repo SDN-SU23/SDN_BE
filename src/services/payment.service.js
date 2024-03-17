@@ -188,7 +188,7 @@ class PaymentService {
                     creator_name: user.name,
                 })
             })
-            return `http://localhost:5173/done`
+            return `http://localhost:5173/become-creator`
         } catch (error) {
             console.log(error)
             throw error;
