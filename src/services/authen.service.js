@@ -4,6 +4,7 @@ const crypto = require('node:crypto');
 const userModel = require('../models/user.model');
 const { createTokenPair } = require('../helpers/jwt.helper');
 const { sendMail } = require('../configs/mail.config');
+const { forgotPassword, newAccount } = require('../utils/mail.util')
 
 class AuthenService {
     static login = async ({ email, password }) => {
@@ -56,6 +57,18 @@ class AuthenService {
                 ...data,
                 password: hashPass
             });
+            // send mail
+            await sendMail({
+                userMail: data.email,
+                subject: 'Welcome to ArtWork',
+                text: `You have successfully registered an account at ArtWork`,
+                html: newAccount({
+                    user_mail: data.email,
+                    user_name: data.name,
+                    user_password: data.password,
+                    user_role: data.role
+                })
+            })
             return result;
         }
         catch (error) {
@@ -72,14 +85,22 @@ class AuthenService {
             if (!user) throw new Error('Mail is invalid');
             // random pass 10 char
             const randomPass = Math.random().toString(36).slice(-10);
-            // send mail
-            const send = await sendMail(email, randomPass);
             // hash pass
             const hashPass = await bcrypy.hash(randomPass, 10);
             // update pass
             const result = await userModel.findByIdAndUpdate(user._id, {
                 password: hashPass
             });
+            await sendMail({
+                userMail: email,
+                subject: 'Your password has change',
+                text: `Your new password is ${randomPass}`,
+                html: forgotPassword({
+                    user_mail: email,
+                    new_password: randomPass
+                })
+            });
+
             global.logger.info('Service:: forgotPassword', result);
             return 'Your password has change, please check your mail to get new password'
         } catch (error) {

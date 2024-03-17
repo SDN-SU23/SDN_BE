@@ -9,7 +9,7 @@ const oauth2Client = new google.auth.OAuth2(
 
 oauth2Client.setCredentials({ refresh_token: global.config.oauth.mailRefreshToken });
 
-const sendMail = async (userMail, password) => {
+const sendMail = async ({ userMail, subject, text, html }) => {
     try {
         const accessToken = await oauth2Client.getAccessToken();
         const transporter = nodemailer.createTransport({
@@ -25,11 +25,11 @@ const sendMail = async (userMail, password) => {
         });
 
         const info = await transporter.sendMail({
-            from: '"ArtWork 👻" Your password has change', // sender address
+            from: `"ArtWork 👻" ${subject}`, // sender address
             to: `${userMail}`, // list of receivers
-            subject: "Your password has change ✔", // Subject line
-            text: `New pass: ${password}`, // plain text body
-            html: `<b>New pass: ${password}<b>`, // html body
+            subject: `${subject}`, // Subject line
+            text: `${text}`, // plain text body
+            html: `${html}`, // html body
         });
 
         return info;

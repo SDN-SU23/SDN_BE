@@ -65,5 +65,4 @@ app.get(
 
 require('./configs/supabase.config')
 // require('./configs/mail.config');
-
-module.exports = app
+module.exports = app;

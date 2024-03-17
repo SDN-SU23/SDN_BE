@@ -29,8 +29,9 @@ class AuthenController {
         }
     }
 
-    forgotPassword = async () => {
+    forgotPassword = async (req, res) => {
         try {
+            console.log(`forgot pass`)
             return res
                 .status(200)
                 .json({

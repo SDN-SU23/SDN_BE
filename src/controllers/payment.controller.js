@@ -8,6 +8,8 @@ const notificationModel = require('../models/notification.model')
 const artworkModel = require('../models/artwork.model')
 const userModel = require('../models/user.model')
 const collectionModel = require('../models/collection.model')
+const { confirmPayment } = require('../utils/mail.util')
+const { sendMail } = require('../configs/mail.config')
 
 class PaymentController {
     createPaymentUrlPayArtWork = async (req, res) => {
@@ -65,7 +67,7 @@ class PaymentController {
             const { accountId, amount, artworkId } = req.params
             // create transactiom
             const getDetailReceiver = await artworkModel.findById(artworkId)
-            await transactiomModel.create({
+            const transaction = await transactiomModel.create({
                 type: 'payArtWork',
                 content: 'Thanh toan cho tac pham',
                 senderId: accountId,
@@ -82,6 +84,22 @@ class PaymentController {
             await collectionModel.create({
                 imageId: artworkId,
                 authorId: accountId,
+            })
+            // get detail sednderID
+            const senderDetail = await userModel.findById(accountId);
+            // get detail artwork
+            const artworkDetail = await artworkModel.findById(artworkId);
+            // send mail
+            await sendMail({
+                userMail: senderDetail.email,
+                subject: `Xác nhận thanh toán`,
+                text: `Bạn đã thanh toán thành công ${amount} cho tác phẩm ${artworkDetail.title}`,
+                html: confirmPayment({
+                    customer_name: senderDetail.name,
+                    order_date: moment().format('DD/MM/YYYY HH:mm:ss'),
+                    order_number: transaction._id,
+                    total_amount: amount,
+                })
             })
 
             res.redirect('http://localhost:5173/done')
