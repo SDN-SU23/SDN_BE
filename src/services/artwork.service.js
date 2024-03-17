@@ -79,7 +79,7 @@ class ArtworkService {
         }
     }
 
-    static getArtworkDetail = async (artworkId) => {
+    static getArtworkDetail = async (artworkId, userId) => {
         try {
             let result = await artworkModel
                 .findById(artworkId)
@@ -140,17 +140,17 @@ class ArtworkService {
             }
             result.isLike = false
             // check like of user
-            // if (userId) {
-            //     let react = await reactModel.findOne({
-            //         userId: userId,
-            //         artworkId: artworkId,
-            //     })
-            //     if (react) {
-            //         result.isLike = true
-            //     } else {
-            //         result.isLike = false
-            //     }
-            // }
+            if (userId) {
+                let react = await reactModel.findOne({
+                    userId: userId,
+                    artworkId: artworkId,
+                })
+                if (react) {
+                    result.isLike = true
+                } else {
+                    result.isLike = false
+                }
+            }
 
             return {
                 commentList,
