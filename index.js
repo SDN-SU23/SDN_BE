@@ -4,6 +4,7 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 // require('./src/configs/supabase.config')
+require('./src/services/schedule.service')();
 
 io.on('connection', (socket) => {
     if (socket) {
