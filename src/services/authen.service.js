@@ -36,7 +36,8 @@ class AuthenService {
                 userMail: email,
                 userId: user._id,
                 role: user.role,
-                avatar: user.avatarUrl
+                avatar: user.avatarUrl,
+                wallet: user.wallet
             };
 
         } catch (error) {
@@ -55,6 +56,7 @@ class AuthenService {
             // create user
             const result = await userModel.create({
                 ...data,
+                wallet: 0,
                 password: hashPass
             });
             // send mail

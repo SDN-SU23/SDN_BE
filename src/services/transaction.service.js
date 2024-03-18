@@ -1,6 +1,5 @@
 'use strict'
 
-const { orderBy } = require('lodash');
 const transactionModel = require('../models/transaction.model');
 const artworkModel = require('../models/artwork.model');
 
