@@ -6,7 +6,7 @@ const router = express.Router();
 
 // router.use(checkIsLogin)
 
-// router.get('/userId', userController.getUserId)
+router.get('/:userId', notificationController.getNotificationByuser)
 
 
 

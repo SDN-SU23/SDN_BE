@@ -2,60 +2,49 @@
 
 const notificationModel = require("../models/notification.model");
 const userModel = require("../models/user.model");
+const supabase = require('../configs/supabase.config');
 
 class NotificationService {
-  static getAllNotifications = async (userId) => {
+  static getNotificationByuser = async (userId) => {
     try {
-      const result = await notificationModel.find(
-        { userId: userId }
-      );
-      return result;
+      const { data: userNotifications, error: userError } = await supabase
+        .from('notifications')
+        .select('*')
+        .eq('user_id', userId);
+
+      if (userError) throw userError;
+
+      const { data: allNotifications, error: allError } = await supabase
+        .from('notifications')
+        .select('*')
+        .eq('user_id', 'all');
+
+      if (allError)
+        throw allError;
+
+      // Merge results if both queries were successful
+      return userNotifications.concat(allNotifications);
     } catch (error) {
-      global.logger.error("Service:: getListNotification", error);
+      global.logger.error("Service:: getNotificationByuser", error);
       throw error;
     }
   };
 
-  static createNotificationToUser = async (data) => {
+  static createNotification = async ({ user_id, message }) => {
     try {
-      const result = await notificationModel.create(data);
-      return result;
+      const { data: notification, error } = await supabase
+        .from('Notification')
+        .insert({
+          user_id: user_id,
+          message: message,
+          is_read: false,
+        })
+      return notification;
     } catch (error) {
+      global.logger.error("Service:: createNotification", error);
       throw error;
     }
-  };
-
-  static getNotificationByID = async (id) => {
-    try {
-      const result = await notificationModel.findById(id);
-      return result;
-    } catch (error) {
-      global.logger.error("Service:: getListNotification", error);
-      throw error;
-    }
-  };
-
-  static createNotificationToAllUser = async (data) => {
-    try {
-      // role audience hoặc creator
-      const listUser = await userModel.find({
-        role: { $in: ["audience", "creator"] },
-      });
-
-      for (const user of listUser) {
-        const item = {
-          ...data,
-          userId: user._id,
-        };
-        await notificationModel.create(item);
-      }
-
-      return "Create notification success";
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  };
+  }
 }
 
 module.exports = NotificationService;

@@ -3,7 +3,7 @@ const payos = require('../configs/payos.config');
 const transactionModel = require('../models/transaction.model');
 const time = require('../helpers/timestamp.helper');
 const collectionModel = require('../models/collection.model');
-const notificationModel = require('../models/notification.model');
+const notificationService = require('./notification.service');
 const { sendMail } = require('../configs/mail.config');
 const { confirmPayment, confirmCreator } = require('../utils/mail.util');
 const artworkModel = require('../models/artwork.model');
@@ -90,9 +90,9 @@ class PaymentService {
                 wallet: author.wallet + artwork.price
             })
             // create notification
-            await notificationModel.create({
-                userId: transaction.senderId,
-                message: `Bạn đã mua thành công tác phẩm ${artwork.title}`,
+            await notificationService.createNotification({
+                user_id: artwork.authorId,
+                message: `You have a new order from ${user.name}`,
             })
             // send mail
             await sendMail({

@@ -4,6 +4,8 @@ const artworkModel = require('../models/artwork.model')
 const reactModel = require('../models/react.model')
 const commentModel = require('../models/comment.model')
 const { createSignedUrlDetail } = require('../services/upload.service')
+const notificationService = require('../services/notification.service')
+const userModel = require('../models/user.model')
 
 class ArtworkService {
     static getListArtwork = async (query) => {
@@ -207,6 +209,17 @@ class ArtworkService {
                 { status: status },
                 { new: true }
             )
+            // send notification to author of artwork
+            const artwork = await artworkModel.findOne({
+                _id: artworkId,
+            });
+            const author = await userModel.findById(artwork.authorId);
+            // send notification
+            await notificationService.createNotification({
+                userId: author._id,
+                content: `Your artwork ${artwork.title} has been ${status}`,
+            })
+
             return result
         } catch (error) {
             global.logger.error('Service:: updateArtworkByAdmin', error)

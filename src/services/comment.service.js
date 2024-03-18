@@ -3,8 +3,7 @@
 const { getListInfo, getInfo } = require('../utils')
 const commentModel = require('../models/comment.model');
 const artworkModel = require('../models/artwork.model');
-const notifcationModel = require('../models/notification.model')
-
+const notificationService = require('./notification.service');
 class CommentService {
     static getListCommentByArtworkId = async (artworkId) => {
         try {
@@ -27,16 +26,16 @@ class CommentService {
     static createComment = async (comment) => {
         try {
             const result = await commentModel.create(comment);
-            // // send notification to author of comment
+            // send notification to author of comment
 
-            // const artwork = await artworkModel.findOne({
-            //     _id: comment.artworkId
-            // });
+            const artwork = await artworkModel.findOne({
+                _id: comment.artworkId
+            });
 
-            // const sendNotification = await notifcationModel.create({
-            //     userId: artwork.authorId,
-            //     content: `New comment in your ${artwork.title}`
-            // });
+            await notificationService.createNotification({
+                user_id: artwork.authorId,
+                message: `Comment in your ${artwork.title} has been created`
+            })
 
             return result
         } catch (error) {
@@ -55,15 +54,15 @@ class CommentService {
                 throw new Error('Comment not found')
             }
 
-            // // send notification to author of comment
-            // const artwork = await artworkModel.findOne({
-            //     _id: result.artworkId
-            // })
+            // send notification to author of comment
+            const artwork = await artworkModel.findOne({
+                _id: result.artworkId
+            })
 
-            // const sendNotification = await notifcationModel.create({
-            //     userId: artwork.authorId,
-            //     content: `Comment in your ${artwork.title} has been updated`
-            // })
+            await notificationService.createNotification({
+                user_id: result.authorId,
+                message: `Comment in your ${artwork.title} has been updated`
+            })
 
             return result;
         } catch (error) {
@@ -87,10 +86,10 @@ class CommentService {
                 }
             });
             // send notification to author of comment
-            // const notification = await notifcationModel.create({
-            //     userId: comment.authorId,
-            //     content: `Someone reply your comment in ${comment.artworkId}`
-            // });
+            await notificationService.createNotification({
+                user_id: comment.authorId,
+                message: `Comment in your ${comment.artworkId} has been created`
+            })
             return result
 
         } catch (error) {
