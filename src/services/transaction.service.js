@@ -14,6 +14,8 @@ class TransactionService {
             if (sender.wallet < detail.amount) {
                 throw new Error('Your wallet is not enough to withdraw');
             }
+            // update wallet 
+            await userModel.findByIdAndUpdate(detail.senderId, { wallet: sender.wallet - detail.amount });
             const response = await transactionModel.create({
                 type: 'withdraw',
                 amount: detail.amount,
