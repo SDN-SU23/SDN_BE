@@ -2,11 +2,18 @@
 
 const transactionModel = require('../models/transaction.model');
 const artworkModel = require('../models/artwork.model');
+const userModel = require('../models/user.model');
 
 class TransactionService {
 
     static withdraw = async (detail) => {
         try {
+            // get detail senderId 
+            const sender = await userModel.findById(detail.senderId);
+            // check wallet
+            if (sender.wallet < detail.amount) {
+                throw new Error('Your wallet is not enough to withdraw');
+            }
             const response = await transactionModel.create({
                 type: 'withdraw',
                 amount: detail.amount,
