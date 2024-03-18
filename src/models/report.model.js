@@ -25,14 +25,14 @@ const reportSchema = new Schema(
       default: "pending",
     },
     authorId: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
-      trim: true,
+      ref: "User",
     },
     artworkId: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
-      trim: true,
+      ref: "Artwork",
     },
   },
   {

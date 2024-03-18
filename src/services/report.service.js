@@ -9,7 +9,8 @@ class ReportService {
         .find()
         .limit(query.pageSize)
         .skip((query.currentPage - 1) * query.pageSize)
-        .populate('authorId')
+        .populate('authorId', 'name')
+        .populate('artworkId', 'title')
         .lean();
       return {
         result,
