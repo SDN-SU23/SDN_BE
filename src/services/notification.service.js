@@ -10,14 +10,16 @@ class NotificationService {
       const { data: userNotifications, error: userError } = await supabase
         .from('notifications')
         .select('*')
-        .eq('user_id', userId);
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
 
       if (userError) throw userError;
 
       const { data: allNotifications, error: allError } = await supabase
         .from('notifications')
         .select('*')
-        .eq('user_id', 'all');
+        .eq('user_id', 'all')
+        .order('created_at', { ascending: false });
 
       if (allError)
         throw allError;
@@ -33,7 +35,7 @@ class NotificationService {
   static createNotification = async ({ user_id, message }) => {
     try {
       const { data: notification, error } = await supabase
-        .from('Notification')
+        .from('notifications')
         .insert({
           user_id: user_id,
           message: message,
