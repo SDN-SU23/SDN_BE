@@ -6,4 +6,10 @@ const supabase = createClient(
     global.config.supabase.key
 )
 
+// supabase.storage
+//     .from('SDN')
+//     .list()
+//     .then((res) => console.log(res))
+//     .catch((err) => console.error(err))
+
 module.exports = supabase

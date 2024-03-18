@@ -42,9 +42,13 @@ class UploadService {
 
     static createSignedUrlDetail = async (imageFolder) => {
         try {
+            // console.log('imageFolder', imageFolder)
             const { data, error } = await supabase.storage
                 .from('SDN')
-                .createSignedUrl(`${imageFolder} `, 15)
+                .createSignedUrl(`${imageFolder} `, 30)
+            if (error) {
+                console.log('error', error)
+            }
             return data
         } catch (error) {
             throw error

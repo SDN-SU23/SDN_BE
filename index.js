@@ -3,6 +3,8 @@ const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
+// require('./src/configs/supabase.config')
+
 io.on('connection', (socket) => {
     if (socket) {
         console.log('a user connected');
