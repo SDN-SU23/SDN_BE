@@ -6,7 +6,7 @@ const COLLECTION_NAME = 'transactions';
 const transactionSchema = new Schema({
     type: {
         type: String,
-        enum: ['payArtWork', 'withdraw ', 'registerCreator'],
+        enum: ['payArtWork', 'withdraw', 'registerCreator'],
         required: true
     },
     content: {
