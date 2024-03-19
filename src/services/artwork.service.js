@@ -6,6 +6,7 @@ const commentModel = require('../models/comment.model')
 const { createSignedUrlDetail } = require('../services/upload.service')
 const notificationService = require('../services/notification.service')
 const userModel = require('../models/user.model')
+const reportModel = require('../models/report.model');
 
 class ArtworkService {
     static getListArtwork = async (query) => {
@@ -154,10 +155,13 @@ class ArtworkService {
                 }
             }
 
+            const reportList = await reportModel.find({ artworkId: artworkId }).populate('authorId').lean();
+
             return {
                 commentList,
                 artwork: result,
                 reactList,
+                reportList
             }
         } catch (error) {
             global.logger.error('Service:: getArtworkDetail', error)
