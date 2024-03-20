@@ -197,7 +197,7 @@ const newAccount = ({ user_mail, user_name, user_password, user_role }) => {
   </html>`
 }
 
-const confirmCreator = (creator_name) => {
+const confirmCreator = ({ creator_name }) => {
   return `
   <!DOCTYPE html>
 <html lang="en">
