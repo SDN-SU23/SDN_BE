@@ -2,3 +2,4 @@ node_modules
 logs
 src/upload
 src/text.js
+.env
