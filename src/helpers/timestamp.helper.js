@@ -1,55 +1,25 @@
 const moment = require('moment');
 
 
-const getNow = () => {
-    return moment().format('YYYY-MM-DD HH:mm:ss')
+const getNowFormat = (format) => {
+    return moment().format(format)
 }
 
-const getNowDate = () => {
-    return moment().format('YYYY-MM-DD')
+const convertDateToFormat = (date, format) => {
+    return moment(date).format(format)
 }
 
-const getNowTime = () => {
-    return moment().format('HH:mm:ss')
+const addTimeToNow = (time, numTime, typeTime) => {
+    return moment().add(numTime, typeTime).format(time)
 }
 
-const convertToNormalDate = (date) => {
-    return moment(date).format('YYYY-MM-DD')
-}
-
-const payGetDate = () => {
-    return moment().format('YYYYMMDD')
-}
-
-const payGetTime = (date) => {
-    return moment(date).format('HHmmss')
-}
-
-const payGetNow = (date) => {
-    return moment(date).format('yyyymmddHHmmss')
-}
-
-const addOneDayUnix = () => {
-    return moment().add(1, 'days').unix()
-}
-
-const addFiveMinuteUnix = () => {
-    return moment().add(5, 'minutes').unix()
-}
-
-const addOneMonth = () => {
-    return moment().add(1, 'months').unix()
+const addTimeToNowUnix = (numTime, typeTime) => {
+    return moment().add(numTime, typeTime).unix()
 }
 
 module.exports = {
-    getNow,
-    getNowDate,
-    getNowTime,
-    convertToNormalDate,
-    payGetTime,
-    payGetDate,
-    payGetNow,
-    addOneDayUnix,
-    addFiveMinuteUnix,
-    addOneMonth
+    getNowFormat,
+    convertDateToFormat,
+    addTimeToNow,
+    addTimeToNowUnix
 }
