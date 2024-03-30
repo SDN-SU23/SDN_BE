@@ -7,11 +7,11 @@ const logger = winston.createLogger({
         new winston.transports.Console({
             format: winston.format.printf(
                 // format log : [time] [level] [message]
-                (info) => `[${time.getNow()}] [${info.level}] ${info.message}`,
+                (info) => `[${time.getNowFormat('hh:mm:ss yyyy-mm-dd')}] [${info.level}] ${info.message}`,
             ),
         }),
         new winston.transports.File({
-            filename: `./logs/${time.getNowDate()}.log`,
+            filename: `./logs/${time.getNowFormat('YYYY-MM-DD')}.log`,
             format: winston.format.combine(
                 winston.format.timestamp({
                     format: 'YYYY-MM-DD HH:mm:ss',

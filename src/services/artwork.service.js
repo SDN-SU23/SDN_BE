@@ -36,19 +36,6 @@ class ArtworkService {
             const totalPage = Math.ceil(
                 (await artworkModel.countDocuments(filter)) / pageSize
             )
-            // return filter data and total page
-            const artwork = result.map((item) => {
-                return {
-                    artworkId: item._id,
-                    artworkURL: item.imageURL,
-                    authorAvatar: item.authorId.avatarUrl,
-                    authorName: item.authorId.name,
-                    isLike: false,
-                    status: item.status,
-                    price: item.price,
-                    authorId: item.authorId,
-                }
-            })
             // get signed url of artwork
             for (let i = 0; i < artwork.length; i++) {
                 artwork[i].artworkURL = await createSignedUrlDetail(
